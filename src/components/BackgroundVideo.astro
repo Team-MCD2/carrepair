@@ -1,0 +1,30 @@
+---
+interface Props {
+  src: string;
+  poster: string;
+  class?: string;
+  autoplay?: boolean;
+  lazy?: boolean;
+}
+
+const {
+  src,
+  poster,
+  class: videoClass = 'hero-video',
+  autoplay = false,
+  lazy = true,
+} = Astro.props;
+---
+
+<video
+  class={videoClass}
+  muted
+  loop
+  playsinline
+  poster={poster}
+  preload={lazy ? 'none' : 'metadata'}
+  data-bg-video
+  {...(autoplay ? { autoplay: true } : {})}
+>
+  <source src={src} type="video/mp4" />
+</video>

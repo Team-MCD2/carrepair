@@ -1,0 +1,38 @@
+---
+interface Props {
+  active?: 'index' | 'prestations' | 'a-propos' | 'contact';
+}
+
+const { active } = Astro.props;
+
+const links = [
+  { id: 'index', href: '/index.html', label: 'Accueil' },
+  { id: 'prestations', href: '/prestations.html', label: 'Prestations' },
+  { id: 'a-propos', href: '/a-propos.html', label: 'À Propos' },
+  { id: 'contact', href: '/contact.html', label: 'Contact' },
+] as const;
+---
+
+<header id="site-header">
+  <div class="container header-container">
+    <a href="/index.html" class="logo-wrapper">
+      <img src="/assets/logo.png" alt="Car Repair Toulouse Logo" class="logo-img" width="48" height="48" loading="eager" decoding="async" />
+      <div class="logo-text">Car<span>Repair</span></div>
+    </a>
+    <nav>
+      <ul class="nav-links">
+        {links.map((link) => (
+          <li>
+            <a href={link.href} class:list={['nav-link', { active: active === link.id }]}>{link.label}</a>
+          </li>
+        ))}
+      </ul>
+      <button class="menu-toggle" aria-label="Menu de navigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+    <a href="/contact.html" class="btn-header">Demander un Devis</a>
+  </div>
+</header>

@@ -1,0 +1,16 @@
+---
+import BackgroundVideo from './BackgroundVideo.astro';
+
+interface Props {
+  src: string;
+  poster: string;
+  class?: string;
+  fallbackAlt?: string;
+}
+
+const { src, poster, class: wrapClass = '', fallbackAlt = '' } = Astro.props;
+---
+
+<div class:list={['media-video', wrapClass]}>
+  <BackgroundVideo src={src} poster={poster} class="why-video" lazy={true} autoplay={false} />
+</div>

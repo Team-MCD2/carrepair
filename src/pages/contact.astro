@@ -1,0 +1,151 @@
+﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SubpageHero from '../components/SubpageHero.astro';
+import { VIDEOS, POSTERS } from '../data/videos';
+
+const jsonLd = undefined;
+---
+
+<BaseLayout
+  title="Contact — Garage Car Repair Toulouse | Devis Gratuit"
+  description="Contactez Car Repair à Toulouse. Devis gratuit en ligne ou par téléphone."
+  active="contact"
+  ogImage="https://www.car-repair.fr/assets/logo.png"
+  jsonLd={jsonLd}
+>
+<!-- Subpage Hero -->
+    <section class="subpage-hero subpage-hero--video">
+        <div class="hero-video-wrap" aria-hidden="true">
+            <video class="hero-video" data-bg-video muted loop playsinline poster="/assets/vehicules.png">
+                <source src="/videos/hero.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="container subpage-hero-content reveal-on-scroll">
+            <ul class="breadcrumbs">
+                <li><a href="/index.html">Accueil</a></li>
+                <li class="active">Contact &amp; Devis</li>
+            </ul>
+            <h1 class="subpage-title text-gradient">Contactez-nous</h1>
+            <p class="subpage-desc">Une question, un besoin de réparation ou une demande de devis personnalisé ? Notre équipe vous répond sous 24 heures ouvrées.</p>
+        </div>
+    </section>
+
+    <!-- Contact Content Grid -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Contact Form Wrapper -->
+                <div class="contact-form-wrapper">
+                    <h2>Demander un devis gratuit</h2>
+                    <form action="#" method="POST" id="contact-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="lastname" class="form-label">Nom *</label>
+                                <input type="text" id="lastname" name="lastname" class="form-control" placeholder="Dupont" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="firstname" class="form-label">Prénom *</label>
+                                <input type="text" id="firstname" name="firstname" class="form-control" placeholder="Jean" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email" class="form-label">Email *</label>
+                                <input type="email" id="email" name="email" class="form-control" placeholder="jean.dupont@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="form-label">Téléphone *</label>
+                                <input type="tel" id="phone" name="phone" class="form-control" placeholder="06 12 34 56 78" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="service-select" class="form-label">Type de prestation souhaité *</label>
+                            <select id="service-select" name="service" class="form-control" required style="appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill=\'%23a1a1aa\' height=\'24\' viewBox=\'0 0 24 24\' width=\'24\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M7 10l5 5 5-5z\'/><path d=\'M0 0h24v24H0z\' fill=\'none\'/></svg>'); background-repeat: no-repeat; background-position: right 1rem center;">
+                                <option value="" disabled selected>Choisissez une option...</option>
+                                <option value="mecanique">Mécanique Générale (Vidange, distribution, freins...)</option>
+                                <option value="carrosserie">Carrosserie &amp; Peinture</option>
+                                <option value="pneumatique">Pneumatique &amp; Parallélisme</option>
+                                <option value="achat-vente">Achat / Vente de véhicule</option>
+                                <option value="autre">Autre demande</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-label">Votre message *</label>
+                            <textarea id="message" name="message" class="form-control" placeholder="Détaillez votre demande (Marque, modèle du véhicule, immatriculation si possible et réparations à prévoir)..." required></textarea>
+                        </div>
+                        <p style="font-size: 0.8rem; color: var(--gris); margin-bottom: 1.5rem;">* Champs obligatoires. En soumettant ce formulaire, vous acceptez que les informations saisies soient exploitées dans le cadre de la relation commerciale qui peut en découler.</p>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Envoyer ma demande</button>
+                    </form>
+                </div>
+
+                <!-- Contact Practical Info -->
+                <div class="contact-info-wrapper">
+                    <!-- Info Block 1 -->
+                    <div class="info-block">
+                        <h3>Coordonnées</h3>
+                        <div class="info-items">
+                            <div class="info-item">
+                                <svg class="info-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                <div class="info-text">
+                                    <h4>Téléphone direct</h4>
+                                    <p><a href="tel:0562837429">05 62 83 74 29</a></p>
+                                    <p><a href="tel:0749924436">07 49 92 44 36</a></p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <svg class="info-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                <div class="info-text">
+                                    <h4>Email Secrétariat</h4>
+                                    <p><a href="mailto:info@car-repair.fr">info@car-repair.fr</a></p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <svg class="info-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                                <div class="info-text">
+                                    <h4>Adresse postale</h4>
+                                    <p>34 Rue Adolphe Coll<br>31300 Toulouse</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Info Block 2 -->
+                    <div class="info-block">
+                        <h3>Horaires d'Ouverture</h3>
+                        <div class="info-items">
+                            <div class="info-item">
+                                <svg class="info-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <div class="info-text">
+                                    <h4>Lundi - Vendredi</h4>
+                                    <p>09h00 - 18h00</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <svg class="info-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                <div class="info-text">
+                                    <h4>Samedi</h4>
+                                    <p>10h00 - 17h00</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <svg class="info-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--rouge);"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                <div class="info-text">
+                                    <h4>Dimanche &amp; Jours Fériés</h4>
+                                    <p class="text-rouge" style="font-weight:600;">Fermé</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Maps Embed -->
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2889.3792030093863!2d1.4208367768407886!3d43.59828854332997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12aebb7d41f021e1%3A0xe54e38e6822c92c5!2s34%20Rue%20Adolphe%20Coll%2C%2031300%20Toulouse!5e0!3m2!1sfr!2sfr!4v1717000000000!5m2!1sfr!2sfr" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+</BaseLayout>
+

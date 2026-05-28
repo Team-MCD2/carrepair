@@ -1,0 +1,19 @@
+---
+import BackgroundVideo from './BackgroundVideo.astro';
+
+interface Props {
+  videoSrc: string;
+  poster: string;
+}
+
+const { videoSrc, poster } = Astro.props;
+---
+
+<section class="subpage-hero subpage-hero--video">
+  <div class="hero-video-wrap" aria-hidden="true">
+    <BackgroundVideo src={videoSrc} poster={poster} autoplay={false} lazy={true} />
+  </div>
+  <div class="container subpage-hero-content reveal-on-scroll">
+    <slot />
+  </div>
+</section>
