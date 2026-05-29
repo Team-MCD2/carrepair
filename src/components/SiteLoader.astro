@@ -1,21 +1,24 @@
----
-import logoImg from '../assets/logo.png';
----
-
-<div id="site-loader" class="site-loader" aria-live="polite" aria-busy="true">
-  <div class="site-loader-inner">
-    <img
-      src={logoImg.src}
-      alt=""
-      class="site-loader-logo"
-      width="72"
-      height="72"
-      decoding="async"
-    />
-    <div class="site-loader-brand">Car<span>Repair</span></div>
-    <div class="site-loader-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-      <span class="site-loader-bar"></span>
+<div id="site-loader" class="site-loader" aria-hidden="true">
+  <div class="car-loader" aria-hidden="true">
+    <svg class="car-loader-svg" viewBox="0 0 120 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g class="car-loader-body">
+        <path
+          d="M8 28h8l6-10h36l8 10h18a4 4 0 0 1 4 4v6H8v-10z"
+          fill="#1c1c1e"
+          stroke="#e6291a"
+          stroke-width="2"
+        />
+        <path d="M24 18h30l5 10H29l-5-10z" fill="#2a2a2e" stroke="#e6291a" stroke-width="1.5" />
+        <circle cx="28" cy="38" r="6" fill="#0b0b0b" stroke="#fff" stroke-width="2" />
+        <circle cx="28" cy="38" r="2.5" fill="#e6291a" />
+        <circle cx="88" cy="38" r="6" fill="#0b0b0b" stroke="#fff" stroke-width="2" />
+        <circle cx="88" cy="38" r="2.5" fill="#e6291a" />
+        <rect x="34" y="20" width="10" height="6" rx="1" fill="#e6291a" opacity="0.5" />
+        <rect x="48" y="20" width="10" height="6" rx="1" fill="#e6291a" opacity="0.5" />
+      </g>
+    </svg>
+    <div class="car-loader-road">
+      <span></span><span></span><span></span><span></span>
     </div>
-    <p class="site-loader-text">Préparation de l'expérience…</p>
   </div>
 </div>

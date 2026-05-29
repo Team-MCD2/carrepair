@@ -2,9 +2,30 @@ import { setupBackgroundVideos } from './bg-video';
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+function dismissLoader() {
+  const loader = document.getElementById('site-loader');
+  document.body.classList.remove('is-loading');
+  document.body.classList.add('site-ready', 'hero-ready');
+  if (!loader) return;
+  loader.classList.add('is-done');
+  window.setTimeout(() => loader.remove(), 500);
+}
+
+function initLoader() {
+  const loader = document.getElementById('site-loader');
+  if (!loader || prefersReducedMotion) {
+    loader?.remove();
+    document.body.classList.add('site-ready', 'hero-ready');
+    return;
+  }
+
+  document.body.classList.add('is-loading');
+  window.setTimeout(dismissLoader, 1200);
+}
+
 function runWhenIdle(fn: () => void) {
   if ('requestIdleCallback' in window) {
-    requestIdleCallback(fn, { timeout: 1800 });
+    requestIdleCallback(fn, { timeout: 2000 });
   } else {
     window.setTimeout(fn, 1);
   }
@@ -91,7 +112,7 @@ function initCards() {
     (entries, observer) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add('animate-fade-in', 'is-card-visible');
+        entry.target.classList.add('is-card-visible');
         observer.unobserve(entry.target);
       });
     },
@@ -173,9 +194,7 @@ function initContactForm() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  const hasVideos = Boolean(document.querySelector('[data-bg-video]'));
-  if (hasVideos) document.body.classList.add('is-loading');
-  else document.getElementById('site-loader')?.remove();
+  initLoader();
 
   initHeader();
   initMenu();
@@ -183,27 +202,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initFooterToday();
   initContactForm();
 
-  if (!prefersReducedMotion && hasVideos) {
+  if (!prefersReducedMotion) {
     setupBackgroundVideos();
-  } else {
-    document.getElementById('site-loader')?.remove();
-    document.body.classList.add('site-ready', 'hero-ready');
-  }
-
-  document.addEventListener('site-ready', () => {
-    requestAnimationFrame(() => document.body.classList.add('hero-ready'));
-  });
-
-  if (document.body.classList.contains('site-ready')) {
-    document.body.classList.add('hero-ready');
-  } else {
-    const observer = new MutationObserver(() => {
-      if (document.body.classList.contains('site-ready')) {
-        document.body.classList.add('hero-ready');
-        observer.disconnect();
-      }
-    });
-    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
   }
 
   runWhenIdle(() => {

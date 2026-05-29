@@ -2137,22 +2137,9 @@ footer {
     }
 }
 
-/* Écran de chargement — synchro vidéos */
+/* Écran de chargement — animation voiture (~1,2 s) */
 body.is-loading {
     overflow: hidden;
-}
-
-body.is-loading main,
-body.is-loading header,
-body.is-loading footer {
-    opacity: 0;
-}
-
-body.site-ready main,
-body.site-ready header,
-body.site-ready footer {
-    opacity: 1;
-    transition: opacity 0.55s ease 0.08s;
 }
 
 .site-loader {
@@ -2163,7 +2150,7 @@ body.site-ready footer {
     align-items: center;
     justify-content: center;
     background: var(--noir);
-    transition: opacity 0.65s ease, visibility 0.65s ease;
+    transition: opacity 0.45s ease, visibility 0.45s ease;
 }
 
 .site-loader.is-done {
@@ -2172,55 +2159,48 @@ body.site-ready footer {
     pointer-events: none;
 }
 
-.site-loader-inner {
-    text-align: center;
-    padding: 2rem;
-    max-width: 320px;
+.car-loader {
+    width: min(200px, 55vw);
 }
 
-.site-loader-logo {
-    width: 72px;
-    height: 72px;
-    margin: 0 auto 1rem;
-    animation: loaderPulse 1.4s ease-in-out infinite;
-}
-
-.site-loader-brand {
-    font-family: var(--font-heading);
-    font-weight: 800;
-    font-size: 1.75rem;
-    letter-spacing: -0.02em;
-    margin-bottom: 1.5rem;
-}
-
-.site-loader-brand span {
-    color: var(--rouge);
-}
-
-.site-loader-track {
-    height: 4px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 999px;
-    overflow: hidden;
-    margin-bottom: 1rem;
-}
-
-.site-loader-bar {
+.car-loader-svg {
+    width: 100%;
+    height: auto;
     display: block;
-    height: 100%;
-    width: 0%;
-    background: linear-gradient(90deg, var(--rouge), #ff6b5e);
-    border-radius: 999px;
-    transition: width 0.35s ease;
+    animation: carDrive 1s ease-in-out infinite alternate;
 }
 
-.site-loader-text {
-    font-size: 0.85rem;
-    color: var(--gris);
-    letter-spacing: 0.04em;
+.car-loader-body {
+    transform-origin: 60px 38px;
 }
 
-@keyframes loaderPulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.06); opacity: 0.85; }
+.car-loader-road {
+    display: flex;
+    gap: 12px;
+    margin-top: 1rem;
+    overflow: hidden;
+    height: 3px;
+}
+
+.car-loader-road span {
+    flex: 0 0 28px;
+    height: 3px;
+    background: rgba(230, 41, 26, 0.7);
+    border-radius: 2px;
+    animation: roadScroll 0.5s linear infinite;
+}
+
+.car-loader-road span:nth-child(2) { animation-delay: 0.12s; }
+.car-loader-road span:nth-child(3) { animation-delay: 0.24s; }
+.car-loader-road span:nth-child(4) { animation-delay: 0.36s; }
+
+@keyframes carDrive {
+    0% { transform: translateX(-6px); }
+    100% { transform: translateX(6px); }
+}
+
+@keyframes roadScroll {
+    0% { transform: translateX(40px); opacity: 0; }
+    30% { opacity: 1; }
+    100% { transform: translateX(-40px); opacity: 0; }
 }
