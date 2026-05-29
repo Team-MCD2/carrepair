@@ -67,7 +67,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p {
-    font-weight: 300;
+    font-weight: 400;
     color: var(--gris);
 }
 
@@ -101,6 +101,8 @@ a {
 
 .section-padding {
     padding: 6rem 0;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 480px;
 }
 
 .section-header {
@@ -436,25 +438,10 @@ nav {
     min-height: 100%;
 }
 
-.yt-loop-poster {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1;
-    transition: opacity 0.8s ease;
-}
-
-.yt-loop-poster.is-hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
 .yt-loop-player {
     position: absolute;
     inset: 0;
-    z-index: 2;
+    z-index: 1;
 }
 
 .yt-loop-player iframe {
@@ -467,11 +454,24 @@ nav {
     min-height: 100%;
     transform: translate(-50%, -50%);
     border: 0;
-    pointer-events: none;
+    pointer-events: none !important;
 }
 
-.yt-loop.is-playing .yt-loop-poster {
-    opacity: 0;
+.yt-loop-shield {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    cursor: default;
+    pointer-events: auto;
+}
+
+.subpage-hero--video .hero-yt,
+.subpage-hero--video .yt-loop {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
 }
 
 .video-card .yt-loop {
@@ -1794,6 +1794,25 @@ footer {
 
 .animate-fade-in {
     animation: fadeIn 0.8s ease forwards;
+}
+
+.will-fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.will-fade-in.is-card-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.video-showcase,
+.prestation-section,
+.why-section,
+.trust-banner {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 400px;
 }
 
 .reveal-on-scroll {

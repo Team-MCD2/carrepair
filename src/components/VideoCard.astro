@@ -3,20 +3,18 @@ import YouTubeLoop from './YouTubeLoop.astro';
 
 interface Props {
   videoId: string;
-  poster: string;
   tag: string;
   title: string;
   delay?: number;
 }
 
-const { videoId, poster, tag, title, delay = 0 } = Astro.props;
+const { videoId, tag, title, delay = 0 } = Astro.props;
 ---
 
 <article class="video-card reveal-on-scroll" data-delay={delay}>
-  <YouTubeLoop videoId={videoId} poster={poster} cover={true} title={title} />
+  <YouTubeLoop videoId={videoId} cover={true} title={title} />
   <div class="video-card-overlay">
     <span class="video-card-tag">{tag}</span>
     <h3>{title}</h3>
   </div>
 </article>
-

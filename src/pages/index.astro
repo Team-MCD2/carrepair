@@ -45,6 +45,7 @@ const jsonLd = {
   description="Car Repair, votre garage automobile à Toulouse (31300). Mécanique toutes marques, carrosserie, peinture, pneumatique et vente de véhicules. Devis gratuit. ☎ 05 62 83 74 29."
   active="index"
   jsonLd={jsonLd}
+  preloadHeroImage={POSTERS.hero}
 >
   <HeroCinematic>
     <div class="hero-tagline reveal-item">Votre expert auto à Toulouse</div>
@@ -96,7 +97,7 @@ const jsonLd = {
       </div>
       <div class="video-grid">
         {showcaseVideos.map((v, i) => (
-          <VideoCard videoId={v.id} poster={v.poster} tag={v.tag} title={v.title} delay={i * 150} />
+          <VideoCard videoId={v.id} tag={v.tag} title={v.title} delay={i * 150} />
         ))}
       </div>
     </div>
@@ -167,7 +168,7 @@ const jsonLd = {
           </div>
         </div>
         <div class="why-image-wrapper media-video reveal-on-scroll">
-          <YouTubeLoop videoId={YOUTUBE.pourquoi} poster={POSTERS.equipe} cover={true} title="Pourquoi nous choisir" />
+          <YouTubeLoop videoId={YOUTUBE.pourquoi} cover={true} title="Pourquoi nous choisir" />
         </div>
       </div>
     </div>

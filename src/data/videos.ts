@@ -1,4 +1,4 @@
-/** IDs YouTube  lecture des 30 premi�res secondes en boucle (sans t�l�chargement) */
+/** IDs YouTube — lecture des 30 premières secondes en boucle (sans téléchargement) */
 export const YOUTUBE = {
   hero: 'CI8aM-MMI0E',
   pourquoi: 'PVRqLIgtZ5o',
@@ -17,7 +17,7 @@ export const POSTERS = {
 } as const;
 
 export const showcaseVideos = [
-  { id: YOUTUBE.pourquoi, poster: POSTERS.prestations, tag: 'Diagnostic', title: 'Contr�le sous v�hicule' },
-  { id: YOUTUBE.carrosserie, poster: POSTERS.carrosserie, tag: 'Carrosserie', title: 'Peinture de pr�cision' },
-  { id: YOUTUBE.achat, poster: POSTERS.hero, tag: 'V�hicules', title: 'Achat & vente' },
+  { id: YOUTUBE.pourquoi, tag: 'Diagnostic', title: 'Contrôle sous véhicule' },
+  { id: YOUTUBE.carrosserie, tag: 'Carrosserie', title: 'Peinture de précision' },
+  { id: YOUTUBE.achat, tag: 'Véhicules', title: 'Achat & vente' },
 ] as const;

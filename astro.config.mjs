@@ -8,4 +8,16 @@ export default defineConfig({
     inlineStylesheets: 'auto',
   },
   compressHTML: true,
+  vite: {
+    build: {
+      cssMinify: true,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('youtube-loop')) return 'youtube';
+          },
+        },
+      },
+    },
+  },
 });

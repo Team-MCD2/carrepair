@@ -20,6 +20,7 @@ const { videoId = YOUTUBE.hero, posterSrc = POSTERS.hero } = Astro.props;
       height="1080"
       fetchpriority="high"
       decoding="async"
+      loading="eager"
     />
     <YouTubeLoop videoId={videoId} cover={true} class="hero-yt" />
   </div>

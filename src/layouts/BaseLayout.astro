@@ -10,6 +10,7 @@ interface Props {
   ogImage?: string;
   noindex?: boolean;
   jsonLd?: object;
+  preloadHeroImage?: string;
 }
 
 const {
@@ -19,6 +20,7 @@ const {
   ogImage = 'https://www.car-repair.fr/assets/vehicules.png',
   noindex = false,
   jsonLd,
+  preloadHeroImage,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, 'https://www.car-repair.fr/').href;
@@ -48,17 +50,21 @@ const canonical = new URL(Astro.url.pathname, 'https://www.car-repair.fr/').href
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={ogImage} />
 
+    {preloadHeroImage && (
+      <link rel="preload" as="image" href={preloadHeroImage} fetchpriority="high" />
+    )}
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Montserrat:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Kanit:wght@600;700&family=Montserrat:wght@600;700&family=Poppins:wght@400;500;600&display=swap"
       rel="stylesheet"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
       <link
-        href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Montserrat:wght@500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Kanit:wght@600;700&family=Montserrat:wght@600;700&family=Poppins:wght@400;500;600&display=swap"
         rel="stylesheet"
       />
     </noscript>

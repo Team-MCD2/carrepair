@@ -1,33 +1,40 @@
-import { setupYouTubeLoops } from './youtube-loop';
-
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-document.addEventListener('DOMContentLoaded', () => {
-  const header = document.querySelector('header');
-  if (header) {
-    const handleScroll = () => header.classList.toggle('scrolled', window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+function runWhenIdle(fn: () => void) {
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(fn, { timeout: 1800 });
+  } else {
+    window.setTimeout(fn, 1);
   }
+}
 
-  requestAnimationFrame(() => document.body.classList.add('hero-ready'));
+function initHeader() {
+  const header = document.querySelector('header');
+  if (!header) return;
+  const handleScroll = () => header.classList.toggle('scrolled', window.scrollY > 50);
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  handleScroll();
+}
 
+function initMenu() {
   const menuToggle = document.querySelector('.menu-toggle');
   const navLinks = document.querySelector('.nav-links');
-  if (menuToggle && navLinks) {
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-      const spans = menuToggle.querySelectorAll('span');
-      if (navLinks.classList.contains('active')) {
-        spans[0].setAttribute('style', 'transform: rotate(45deg) translate(6px, 6px)');
-        spans[1].setAttribute('style', 'opacity: 0');
-        spans[2].setAttribute('style', 'transform: rotate(-45deg) translate(6px, -6px)');
-      } else {
-        spans.forEach((s) => s.removeAttribute('style'));
-      }
-    });
-  }
+  if (!menuToggle || !navLinks) return;
 
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    const spans = menuToggle.querySelectorAll('span');
+    if (navLinks.classList.contains('active')) {
+      spans[0].setAttribute('style', 'transform: rotate(45deg) translate(6px, 6px)');
+      spans[1].setAttribute('style', 'opacity: 0');
+      spans[2].setAttribute('style', 'transform: rotate(-45deg) translate(6px, -6px)');
+    } else {
+      spans.forEach((s) => s.removeAttribute('style'));
+    }
+  });
+}
+
+function initFaq() {
   document.querySelectorAll('.faq-question').forEach((question) => {
     question.addEventListener('click', () => {
       const item = question.parentElement!;
@@ -46,7 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+}
 
+function initFooterToday() {
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const currentDayName = daysOfWeek[new Date().getDay()];
   document.querySelectorAll('.footer-hours-list li').forEach((item) => {
@@ -56,53 +65,57 @@ document.addEventListener('DOMContentLoaded', () => {
       if (label) label.innerHTML += " <span>(Aujourd'hui)</span>";
     }
   });
+}
 
+function initReveal() {
   const revealObserver = new IntersectionObserver(
     (entries, observer) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         const delay = parseInt((entry.target as HTMLElement).dataset.delay || '0', 10);
-        setTimeout(() => entry.target.classList.add('is-visible'), delay);
+        window.setTimeout(() => entry.target.classList.add('is-visible'), delay);
         observer.unobserve(entry.target);
       });
     },
-    { rootMargin: '0px 0px -8% 0px', threshold: 0.12 }
+    { rootMargin: '0px 0px -5% 0px', threshold: 0.08 }
   );
   document.querySelectorAll('.reveal-on-scroll').forEach((el) => revealObserver.observe(el));
+}
+
+function initCards() {
+  if (prefersReducedMotion) return;
 
   const cardObserver = new IntersectionObserver(
     (entries, observer) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        const el = entry.target as HTMLElement;
-        el.classList.add('animate-fade-in');
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-        observer.unobserve(el);
+        entry.target.classList.add('animate-fade-in', 'is-card-visible');
+        observer.unobserve(entry.target);
       });
     },
-    { threshold: 0.12 }
+    { rootMargin: '0px 0px -3% 0px', threshold: 0.08 }
   );
 
   document
     .querySelectorAll(
       '.service-card, .feature-item, .review-card, .prestation-row, .engagement-card, .info-block'
     )
-    .forEach((el, index) => {
+    .forEach((el) => {
       if (el.classList.contains('reveal-on-scroll')) return;
-      const htmlEl = el as HTMLElement;
-      htmlEl.style.opacity = '0';
-      htmlEl.style.transform = 'translateY(24px)';
-      htmlEl.style.transition = `opacity 0.65s ease ${(index % 3) * 0.08}s, transform 0.65s ease ${(index % 3) * 0.08}s`;
+      el.classList.add('will-fade-in');
       cardObserver.observe(el);
     });
+}
+
+function initCounters() {
+  if (prefersReducedMotion) return;
 
   const animateCounter = (el: HTMLElement) => {
     const target = parseFloat(el.dataset.count || '0');
     const prefix = el.dataset.prefix || '';
     const suffix = el.dataset.suffix || '';
     const isDecimal = !Number.isInteger(target);
-    const duration = 1400;
+    const duration = 1200;
     const start = performance.now();
 
     const tick = (now: number) => {
@@ -123,37 +136,61 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.unobserve(entry.target);
       });
     },
-    { threshold: 0.5 }
+    { threshold: 0.4 }
   );
 
-  if (!prefersReducedMotion) {
-    document.querySelectorAll('.trust-number[data-count]').forEach((el) => counterObserver.observe(el));
-    setupYouTubeLoops();
-  }
+  document.querySelectorAll('.trust-number[data-count]').forEach((el) => counterObserver.observe(el));
+}
 
+async function initYouTube() {
+  if (prefersReducedMotion || !document.querySelector('[data-yt-loop]')) return;
+  const { setupYouTubeLoops } = await import('./youtube-loop');
+  setupYouTubeLoops();
+}
+
+function initContactForm() {
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
-  if (form) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const serviceParam = urlParams.get('service');
-    const select = document.getElementById('service-select') as HTMLSelectElement | null;
-    if (serviceParam && select) {
-      for (const option of select.options) {
-        if (option.value === serviceParam) {
-          select.value = serviceParam;
-          break;
-        }
+  if (!form) return;
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const serviceParam = urlParams.get('service');
+  const select = document.getElementById('service-select') as HTMLSelectElement | null;
+  if (serviceParam && select) {
+    for (const option of select.options) {
+      if (option.value === serviceParam) {
+        select.value = serviceParam;
+        break;
       }
     }
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const first = (document.getElementById('firstname') as HTMLInputElement).value;
-      const last = (document.getElementById('lastname') as HTMLInputElement).value;
-      const service = select?.options[select.selectedIndex]?.text || '';
-      alert(
-        `Merci ${first} ${last} !\nVotre demande concernant "${service}" a bien �t� enregistr�e (simulation).\nNous vous recontacterons sous 24h.`
-      );
-      form.reset();
-    });
   }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const first = (document.getElementById('firstname') as HTMLInputElement).value;
+    const last = (document.getElementById('lastname') as HTMLInputElement).value;
+    const service = select?.options[select.selectedIndex]?.text || '';
+    alert(
+      `Merci ${first} ${last} !\nVotre demande concernant "${service}" a bien été enregistrée (simulation).\nNous vous recontacterons sous 24h.`
+    );
+    form.reset();
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initHeader();
+  initMenu();
+  initFaq();
+  initFooterToday();
+  initContactForm();
+  requestAnimationFrame(() => document.body.classList.add('hero-ready'));
+
+  runWhenIdle(() => {
+    initReveal();
+    initCards();
+    initCounters();
+  });
+
+  runWhenIdle(() => {
+    void initYouTube();
+  });
 });

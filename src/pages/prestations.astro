@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import YouTubeLoop from '../components/YouTubeLoop.astro';
-import { YOUTUBE, POSTERS } from '../data/videos';
+import { YOUTUBE } from '../data/videos';
 ---
 
 <BaseLayout
@@ -13,7 +13,7 @@ import { YOUTUBE, POSTERS } from '../data/videos';
 <!-- Subpage Hero -->
     <section class="subpage-hero subpage-hero--video">
         <div class="hero-video-wrap" aria-hidden="true">
-            <YouTubeLoop videoId={YOUTUBE.hero} poster={POSTERS.prestations} cover={true} class="hero-yt" />
+            <YouTubeLoop videoId={YOUTUBE.hero} cover={true} class="hero-yt" />
         </div>
         <div class="container subpage-hero-content reveal-on-scroll">
             <ul class="breadcrumbs">
@@ -69,7 +69,7 @@ import { YOUTUBE, POSTERS } from '../data/videos';
                     <a href="/contact/?service=mecanique" class="btn btn-primary">Demander un tarif</a>
                 </div>
                 <div class="prestation-media media-video">
-                    <YouTubeLoop videoId={YOUTUBE.pourquoi} poster={POSTERS.prestations} cover={true} title="Mécanique" />
+                    <YouTubeLoop videoId={YOUTUBE.pourquoi} cover={true} title="Mécanique" />
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@ import { YOUTUBE, POSTERS } from '../data/videos';
         <div class="container">
             <div class="prestation-row">
                 <div class="prestation-media media-video">
-                    <YouTubeLoop videoId={YOUTUBE.carrosserie} poster={POSTERS.carrosserie} cover={true} title="Carrosserie" />
+                    <YouTubeLoop videoId={YOUTUBE.carrosserie} cover={true} title="Carrosserie" />
                 </div>
                 <div class="prestation-info">
                     <h2>Carrosserie &amp; Peinture</h2>
@@ -164,7 +164,7 @@ import { YOUTUBE, POSTERS } from '../data/videos';
         <div class="container">
             <div class="prestation-row">
                 <div class="prestation-media media-video">
-                    <YouTubeLoop videoId={YOUTUBE.achat} poster={POSTERS.hero} cover={true} title="Achat véhicule" />
+                    <YouTubeLoop videoId={YOUTUBE.achat} cover={true} title="Achat véhicule" />
                 </div>
                 <div class="prestation-info">
                     <h2>Achat &amp; Vente de Véhicules</h2>

@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import YouTubeLoop from '../components/YouTubeLoop.astro';
-import { YOUTUBE, POSTERS } from '../data/videos';
+import { YOUTUBE } from '../data/videos';
 ---
 
 <BaseLayout
@@ -13,7 +13,7 @@ import { YOUTUBE, POSTERS } from '../data/videos';
 <!-- Subpage Hero -->
     <section class="subpage-hero subpage-hero--video">
         <div class="hero-video-wrap" aria-hidden="true">
-            <YouTubeLoop videoId={YOUTUBE.apropos} poster={POSTERS.equipe} cover={true} class="hero-yt" />
+            <YouTubeLoop videoId={YOUTUBE.apropos} cover={true} class="hero-yt" />
         </div>
         <div class="container subpage-hero-content reveal-on-scroll">
             <ul class="breadcrumbs">
@@ -36,7 +36,7 @@ import { YOUTUBE, POSTERS } from '../data/videos';
                     <p>Sp�cialistes �galement de la liaison au sol et du pneumatique, nous sommes �quip�s des machines de montage et de g�om�trie 3D de derni�re g�n�ration pour garantir le parfait parall�lisme de vos trains roulants.</p>
                 </div>
                 <div class="about-media media-video">
-                    <YouTubeLoop videoId={YOUTUBE.apropos} poster={POSTERS.equipe} cover={true} title="Notre �quipe" />
+                    <YouTubeLoop videoId={YOUTUBE.apropos} cover={true} title="Notre �quipe" />
                 </div>
             </div>
         </div>

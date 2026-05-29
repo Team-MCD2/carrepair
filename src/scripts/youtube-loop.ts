@@ -5,8 +5,12 @@ declare global {
         el: HTMLElement,
         opts: {
           videoId: string;
+          host?: string;
           playerVars?: Record<string, number | string>;
-          events?: { onReady?: (e: { target: YtPlayer }) => void };
+          events?: {
+            onReady?: (e: { target: YtPlayer }) => void;
+            onStateChange?: (e: { data: number; target: YtPlayer }) => void;
+          };
         }
       ) => YtPlayer;
     };
@@ -22,13 +26,28 @@ interface YtPlayer {
   pauseVideo(): void;
 }
 
+const YT_PLAYING = 1;
+
 let apiReady: Promise<void> | null = null;
+const players = new Map<HTMLElement, YtPlayer>();
+const loopTimers = new Map<HTMLElement, number>();
+let activeEl: HTMLElement | null = null;
 
 function loadYouTubeAPI(): Promise<void> {
   if (window.YT?.Player) return Promise.resolve();
   if (apiReady) return apiReady;
 
   apiReady = new Promise((resolve) => {
+    if (!document.querySelector('link[data-yt-prefetch]')) {
+      for (const href of ['https://www.youtube-nocookie.com', 'https://www.youtube.com']) {
+        const link = document.createElement('link');
+        link.rel = 'dns-prefetch';
+        link.href = href;
+        link.setAttribute('data-yt-prefetch', '');
+        document.head.appendChild(link);
+      }
+    }
+
     const prev = window.onYouTubeIframeAPIReady;
     window.onYouTubeIframeAPIReady = () => {
       prev?.();
@@ -43,23 +62,61 @@ function loadYouTubeAPI(): Promise<void> {
   return apiReady;
 }
 
-function hidePoster(el: HTMLElement) {
-  el.querySelector('.yt-loop-poster')?.classList.add('is-hidden');
+function hideCinematicPoster(el: HTMLElement) {
   const hero = el.closest('.hero--cinematic');
-  if (hero) {
-    hero.classList.add('is-video-playing');
-    hero.querySelector('.hero-poster')?.classList.add('is-hidden');
+  if (!hero) return;
+  hero.classList.add('is-video-playing');
+  hero.querySelector('.hero-poster')?.classList.add('is-hidden');
+}
+
+function clearLoopTimer(el: HTMLElement) {
+  const id = loopTimers.get(el);
+  if (id) {
+    window.clearInterval(id);
+    loopTimers.delete(el);
   }
 }
 
-function startLoop(player: YtPlayer, maxSec: number) {
-  window.setInterval(() => {
+function startLoop(el: HTMLElement, player: YtPlayer, maxSec: number) {
+  clearLoopTimer(el);
+  loopTimers.set(
+    el,
+    window.setInterval(() => {
+      try {
+        if (activeEl !== el) return;
+        if (player.getCurrentTime() >= maxSec) player.seekTo(0, true);
+      } catch {
+        /* détruit */
+      }
+    }, 500)
+  );
+}
+
+function pauseOthers(keep: HTMLElement) {
+  players.forEach((player, el) => {
+    if (el === keep) return;
     try {
-      if (player.getCurrentTime() >= maxSec) player.seekTo(0, true);
+      player.pauseVideo();
     } catch {
-      /* player d�truit */
+      /* ignore */
     }
-  }, 400);
+    clearLoopTimer(el);
+  });
+}
+
+function playOnly(el: HTMLElement) {
+  const player = players.get(el);
+  if (!player) return;
+  activeEl = el;
+  pauseOthers(el);
+  try {
+    player.mute();
+    player.playVideo();
+    const maxSec = parseInt(el.dataset.ytMax || '30', 10);
+    startLoop(el, player, maxSec);
+  } catch {
+    /* ignore */
+  }
 }
 
 function createPlayer(el: HTMLElement, delayMs = 0) {
@@ -71,63 +128,98 @@ function createPlayer(el: HTMLElement, delayMs = 0) {
   if (!container) return;
 
   el.dataset.ytReady = 'true';
+  const isCinematic = Boolean(el.closest('.hero--cinematic'));
 
   const init = () => {
-    new window.YT.Player(container, {
+    const player = new window.YT.Player(container, {
+      host: 'https://www.youtube-nocookie.com',
       videoId: id,
       playerVars: {
-        autoplay: 1,
+        autoplay: 0,
         mute: 1,
         controls: 0,
         rel: 0,
         modestbranding: 1,
         playsinline: 1,
         start: 0,
+        end: maxSec,
         fs: 0,
         disablekb: 1,
         iv_load_policy: 3,
+        cc_load_policy: 0,
+        enablejsapi: 1,
         origin: window.location.origin,
       },
       events: {
         onReady: ({ target }) => {
+          players.set(el, target);
           target.mute();
-          target.playVideo();
-          el.classList.add('is-playing');
-          if (el.classList.contains('hero-yt') || el.closest('.hero--cinematic')) {
-            window.setTimeout(() => hidePoster(el), delayMs > 0 ? 0 : 100);
+          el.classList.add('is-ready');
+          if (isCinematic) {
+            window.setTimeout(() => {
+              playOnly(el);
+              el.classList.add('is-playing');
+              hideCinematicPoster(el);
+            }, 80);
+          } else if (activeEl === el || !activeEl) {
+            playOnly(el);
+            el.classList.add('is-playing');
           }
-          startLoop(target, maxSec);
+        },
+        onStateChange: ({ data, target }) => {
+          if (data === YT_PLAYING && activeEl === el) startLoop(el, target, maxSec);
         },
       },
     });
+    void player;
   };
 
-  if (delayMs > 0) {
-    window.setTimeout(init, delayMs);
-  } else {
-    init();
-  }
+  if (delayMs > 0) window.setTimeout(init, delayMs);
+  else init();
 }
 
 export async function setupYouTubeLoops() {
-  const nodes = document.querySelectorAll<HTMLElement>('[data-yt-loop]');
+  const nodes = [...document.querySelectorAll<HTMLElement>('[data-yt-loop]')];
   if (!nodes.length) return;
 
   await loadYouTubeAPI();
 
   const observer = new IntersectionObserver(
     (entries) => {
-      entries.forEach((entry) => {
+      for (const entry of entries) {
         const el = entry.target as HTMLElement;
-        if (!entry.isIntersecting) return;
+        const isCinematic = Boolean(el.closest('.hero--cinematic'));
 
-        const isHero = Boolean(el.closest('.hero--cinematic'));
-        createPlayer(el, isHero ? 2200 : 0);
-        observer.unobserve(el);
-      });
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.2) {
+          if (el.dataset.ytReady !== 'true') {
+            createPlayer(el, isCinematic ? 2200 : 0);
+          } else {
+            playOnly(el);
+            el.classList.add('is-playing');
+          }
+        } else if (el.dataset.ytReady === 'true' && !isCinematic) {
+          if (activeEl === el) activeEl = null;
+          try {
+            players.get(el)?.pauseVideo();
+          } catch {
+            /* ignore */
+          }
+          clearLoopTimer(el);
+          el.classList.remove('is-playing');
+        }
+      }
     },
-    { rootMargin: '60px', threshold: 0.1 }
+    { rootMargin: '0px', threshold: [0, 0.2, 0.5] }
   );
 
-  nodes.forEach((node) => observer.observe(node));
+  const cinematic = nodes.find((el) => el.closest('.hero--cinematic'));
+  if (cinematic) {
+    createPlayer(cinematic, 2200);
+    observer.observe(cinematic);
+  }
+
+  for (const el of nodes) {
+    if (el === cinematic) continue;
+    observer.observe(el);
+  }
 }
