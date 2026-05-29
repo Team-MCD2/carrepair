@@ -14,6 +14,7 @@ interface Props {
   noindex?: boolean;
   jsonLd?: object;
   preloadHeroImage?: string;
+  preloadHeroVideo?: string;
 }
 
 const {
@@ -24,6 +25,7 @@ const {
   noindex = false,
   jsonLd,
   preloadHeroImage,
+  preloadHeroVideo,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, 'https://www.car-repair.fr/').href;
@@ -58,6 +60,10 @@ const hasVideos = Astro.url.pathname !== '/mentions-legales/';
       <link rel="preload" as="image" href={preloadHeroImage} fetchpriority="high" />
     )}
 
+    {preloadHeroVideo && (
+      <link rel="preload" as="video" href={preloadHeroVideo} type="video/mp4" />
+    )}
+
     {cloudName && (
       <>
         <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
@@ -89,7 +95,7 @@ const hasVideos = Astro.url.pathname !== '/mentions-legales/';
       <slot />
     </main>
     <Footer />
-    <script>
+    <script type="module" defer>
       import '../scripts/main.ts';
     </script>
   </body>

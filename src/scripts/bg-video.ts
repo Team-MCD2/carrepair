@@ -1,4 +1,4 @@
-const LOADER_MS = 1100;
+const LOADER_MS = 900;
 
 function getLoader() {
   return document.getElementById('site-loader');
@@ -21,11 +21,29 @@ function showHeroVideo() {
   }
 }
 
+function isHeroVideo(video: HTMLVideoElement): boolean {
+  return Boolean(
+    video.classList.contains('hero-video') ||
+      video.closest('.hero--cinematic, .subpage-hero--video')
+  );
+}
+
+function loadVideoSource(video: HTMLVideoElement): void {
+  const source = video.querySelector<HTMLSourceElement>('source[data-src]');
+  if (!source) return;
+  const url = source.dataset.src;
+  if (!url || source.getAttribute('src')) return;
+  source.src = url;
+  video.load();
+}
+
 function playVideo(video: HTMLVideoElement) {
+  loadVideoSource(video);
   video.muted = true;
   video.playsInline = true;
   void video.play().catch(() => {});
   video.classList.add('is-playing');
+  if (video.closest('.hero--cinematic')) showHeroVideo();
 }
 
 function pauseVideo(video: HTMLVideoElement) {
@@ -33,30 +51,24 @@ function pauseVideo(video: HTMLVideoElement) {
   video.classList.remove('is-playing');
 }
 
-function startVideos(videos: HTMLVideoElement[]) {
-  for (const video of videos) {
-    playVideo(video);
-    if (video.closest('.hero--cinematic')) showHeroVideo();
-  }
-}
-
 function initScrollVideos(videos: HTMLVideoElement[]) {
   const observer = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
         const video = entry.target as HTMLVideoElement;
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.15) {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.12) {
           playVideo(video);
-          if (video.closest('.hero--cinematic')) showHeroVideo();
         } else if (!video.closest('.hero--cinematic')) {
           pauseVideo(video);
         }
       }
     },
-    { rootMargin: '80px', threshold: [0, 0.15] }
+    { rootMargin: '120px 0px', threshold: [0, 0.12] }
   );
 
-  videos.forEach((v) => observer.observe(v));
+  for (const video of videos) {
+    observer.observe(video);
+  }
 }
 
 export function setupBackgroundVideos() {
@@ -69,15 +81,14 @@ export function setupBackgroundVideos() {
 
   document.body.classList.add('is-loading');
 
-  videos.forEach((v) => {
-    v.muted = true;
-    v.preload = 'auto';
-    v.addEventListener('error', () => v.classList.add('is-error'), { once: true });
-  });
+  for (const video of videos) {
+    video.muted = true;
+    video.addEventListener('error', () => video.classList.add('is-error'), { once: true });
+  }
 
   window.setTimeout(() => {
     finishLoading();
-    startVideos(videos);
+    videos.filter(isHeroVideo).forEach(playVideo);
     initScrollVideos(videos);
   }, LOADER_MS);
 }
