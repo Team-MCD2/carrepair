@@ -22,4 +22,6 @@ npm run preview  # prévisualiser la version build
 
 ## Déploiement
 
-Après `npm run build`, déployer le contenu du dossier `dist/` sur votre hébergeur.
+1. Copier `.env.example` vers `.env` et renseigner les URLs Cloudinary (sinon le build utilise les MP4 locaux, ~57 Mo).
+2. Lancer `npm run build`.
+3. Déployer le contenu du dossier `dist/` sur votre hébergeur.

@@ -14,7 +14,7 @@ function optimizeCloudinaryVideoUrl(url: string): string {
   const after = url.slice(i + marker.length);
   if (/^(q_|w_|c_|f_|sp_|fl_)/.test(after)) return url;
   const base = url.slice(0, i + marker.length);
-  return `${base}q_auto:eco,w_1280,c_limit,f_mp4/${after}`;
+  return `${base}q_auto:eco,w_960,c_limit,f_mp4/${after}`;
 }
 
 function cloudinaryUrl(publicIdOrUrl: string | undefined, localFallback: string): string {
@@ -24,7 +24,7 @@ function cloudinaryUrl(publicIdOrUrl: string | undefined, localFallback: string)
   }
   if (!cloud?.trim()) return localFallback;
   const id = publicIdOrUrl.replace(/^\//, '').replace(/\.mp4$/i, '');
-  return `https://res.cloudinary.com/${cloud}/video/upload/q_auto:eco,w_1280,c_limit,f_mp4/${id}.mp4`;
+  return `https://res.cloudinary.com/${cloud}/video/upload/q_auto:eco,w_960,c_limit,f_mp4/${id}.mp4`;
 }
 
 export const VIDEOS = {
@@ -42,7 +42,7 @@ export const POSTERS = {
   hero: '/assets/vehicules.png',
   prestations: '/assets/vehicules.png',
   equipe: '/assets/vehicules.png',
-  carrosserie: '/assets/logo-carrepair-carrosserie.png',
+  carrosserie: '/assets/vehicules.png',
 } as const;
 
 export const showcaseVideos = [

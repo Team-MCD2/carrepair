@@ -22,36 +22,53 @@ function loadVideoSource(video: HTMLVideoElement): void {
   video.load();
 }
 
+let activeScrollVideo: HTMLVideoElement | null = null;
+
 function playVideo(video: HTMLVideoElement) {
+  const isHero = isHeroVideo(video);
+
+  if (!isHero && activeScrollVideo && activeScrollVideo !== video) {
+    pauseVideo(activeScrollVideo);
+  }
+
   loadVideoSource(video);
   video.muted = true;
   video.playsInline = true;
   void video.play().catch(() => {});
   video.classList.add('is-playing');
-  if (video.closest('.hero--cinematic')) showHeroVideo();
+
+  if (isHero) {
+    showHeroVideo();
+  } else {
+    activeScrollVideo = video;
+  }
 }
 
 function pauseVideo(video: HTMLVideoElement) {
   video.pause();
   video.classList.remove('is-playing');
+  if (activeScrollVideo === video) activeScrollVideo = null;
 }
 
 function initScrollVideos(videos: HTMLVideoElement[]) {
+  const scrollVideos = videos.filter((v) => !isHeroVideo(v));
+  if (!scrollVideos.length) return;
+
   const observer = new IntersectionObserver(
     (entries) => {
       for (const entry of entries) {
         const video = entry.target as HTMLVideoElement;
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.12) {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.35) {
           playVideo(video);
-        } else if (!video.closest('.hero--cinematic')) {
+        } else {
           pauseVideo(video);
         }
       }
     },
-    { rootMargin: '120px 0px', threshold: [0, 0.12] }
+    { rootMargin: '0px', threshold: [0, 0.35] }
   );
 
-  for (const video of videos) {
+  for (const video of scrollVideos) {
     observer.observe(video);
   }
 }
@@ -65,6 +82,10 @@ export function setupBackgroundVideos() {
     video.addEventListener('error', () => video.classList.add('is-error'), { once: true });
   }
 
-  videos.filter(isHeroVideo).forEach(playVideo);
+  const heroVideos = videos.filter(isHeroVideo);
+  if (heroVideos.length) {
+    requestAnimationFrame(() => heroVideos.forEach(playVideo));
+  }
+
   initScrollVideos(videos);
 }
