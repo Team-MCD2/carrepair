@@ -1,13 +1,13 @@
 ---
-import YouTubeLoop from './YouTubeLoop.astro';
-import { YOUTUBE, POSTERS } from '../data/videos';
+import LocalVideo from './LocalVideo.astro';
+import { VIDEOS, POSTERS } from '../data/videos';
 
 interface Props {
-  videoId?: string;
+  videoSrc?: string;
   posterSrc?: string;
 }
 
-const { videoId = YOUTUBE.hero, posterSrc = POSTERS.hero } = Astro.props;
+const { videoSrc = VIDEOS.hero, posterSrc = POSTERS.hero } = Astro.props;
 ---
 
 <section class="hero hero--video hero--cinematic">
@@ -22,7 +22,7 @@ const { videoId = YOUTUBE.hero, posterSrc = POSTERS.hero } = Astro.props;
       decoding="async"
       loading="eager"
     />
-    <YouTubeLoop videoId={videoId} cover={true} class="hero-yt" />
+    <LocalVideo src={videoSrc} cover={true} class="hero-video" eager={true} />
   </div>
   <div class="container">
     <div class="hero-content">
@@ -30,4 +30,3 @@ const { videoId = YOUTUBE.hero, posterSrc = POSTERS.hero } = Astro.props;
     </div>
   </div>
 </section>
-

@@ -400,7 +400,8 @@ nav {
 }
 
 .hero--cinematic.is-video-playing .hero-video,
-.hero--cinematic.is-video-playing .hero-yt {
+.hero--cinematic.is-video-playing .hero-yt,
+.hero--cinematic.is-video-playing .bg-video {
     opacity: 1;
     transform: scale(1.02);
 }
@@ -415,18 +416,61 @@ nav {
     min-height: 100svh;
 }
 
-.hero--cinematic .hero-yt {
+.hero--cinematic .hero-video.bg-video {
     position: absolute;
     inset: 0;
     z-index: 1;
     width: 100%;
     height: 100%;
+    object-fit: cover;
     opacity: 0;
     transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.hero--cinematic.is-video-playing .hero-yt {
+.hero--cinematic.is-video-playing .hero-video.bg-video,
+.hero--cinematic .hero-video.bg-video.is-playing {
     opacity: 1;
+}
+
+.bg-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: var(--noir);
+}
+
+.bg-video--cover {
+    position: absolute;
+    inset: 0;
+}
+
+.subpage-hero--video .hero-video.bg-video,
+.subpage-hero--video .bg-video--cover {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.4;
+}
+
+.video-card .bg-video,
+.video-card .bg-video--cover {
+    position: absolute;
+    inset: 0;
+}
+
+.media-video .bg-video,
+.media-video .bg-video--cover {
+    position: absolute;
+    inset: 0;
+    min-height: 280px;
+    border-radius: var(--border-radius);
+}
+
+.prestation-media.media-video .bg-video {
+    min-height: 400px;
 }
 
 /* YouTube int�gr� (30 s en boucle, sans ffmpeg) */
@@ -527,6 +571,10 @@ nav {
 
 .prestation-media.media-video .yt-loop {
     min-height: 400px;
+}
+
+.hero--cinematic .hero-media .bg-video--cover {
+    z-index: 1;
 }
 
 .hero::before {

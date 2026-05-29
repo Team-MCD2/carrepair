@@ -1,3 +1,5 @@
+import { setupBackgroundVideos } from './bg-video';
+
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function runWhenIdle(fn: () => void) {
@@ -142,20 +144,6 @@ function initCounters() {
   document.querySelectorAll('.trust-number[data-count]').forEach((el) => counterObserver.observe(el));
 }
 
-async function initYouTube() {
-  const hasVideos = Boolean(document.querySelector('[data-yt-loop]'));
-  if (prefersReducedMotion) {
-    document.getElementById('site-loader')?.remove();
-    return;
-  }
-  if (!hasVideos) {
-    document.getElementById('site-loader')?.remove();
-    return;
-  }
-  const { setupYouTubeLoops } = await import('./youtube-loop');
-  await setupYouTubeLoops();
-}
-
 function initContactForm() {
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   if (!form) return;
@@ -185,9 +173,9 @@ function initContactForm() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (document.querySelector('[data-yt-loop]')) {
-    document.body.classList.add('is-loading');
-  }
+  const hasVideos = Boolean(document.querySelector('[data-bg-video]'));
+  if (hasVideos) document.body.classList.add('is-loading');
+  else document.getElementById('site-loader')?.remove();
 
   initHeader();
   initMenu();
@@ -195,12 +183,32 @@ document.addEventListener('DOMContentLoaded', () => {
   initFooterToday();
   initContactForm();
 
-  void initYouTube().then(() => {
+  if (!prefersReducedMotion && hasVideos) {
+    setupBackgroundVideos();
+  } else {
+    document.getElementById('site-loader')?.remove();
+    document.body.classList.add('site-ready', 'hero-ready');
+  }
+
+  document.addEventListener('site-ready', () => {
     requestAnimationFrame(() => document.body.classList.add('hero-ready'));
-    runWhenIdle(() => {
-      initReveal();
-      initCards();
-      initCounters();
+  });
+
+  if (document.body.classList.contains('site-ready')) {
+    document.body.classList.add('hero-ready');
+  } else {
+    const observer = new MutationObserver(() => {
+      if (document.body.classList.contains('site-ready')) {
+        document.body.classList.add('hero-ready');
+        observer.disconnect();
+      }
     });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  }
+
+  runWhenIdle(() => {
+    initReveal();
+    initCards();
+    initCounters();
   });
 });

@@ -1,18 +1,19 @@
 ---
-import YouTubeLoop from './YouTubeLoop.astro';
+import LocalVideo from './LocalVideo.astro';
 
 interface Props {
-  videoId: string;
+  src: string;
+  poster: string;
   tag: string;
   title: string;
   delay?: number;
 }
 
-const { videoId, tag, title, delay = 0 } = Astro.props;
+const { src, poster, tag, title, delay = 0 } = Astro.props;
 ---
 
 <article class="video-card reveal-on-scroll" data-delay={delay}>
-  <YouTubeLoop videoId={videoId} cover={true} title={title} />
+  <LocalVideo src={src} poster={poster} cover={true} />
   <div class="video-card-overlay">
     <span class="video-card-tag">{tag}</span>
     <h3>{title}</h3>

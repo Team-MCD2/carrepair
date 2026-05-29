@@ -11,13 +11,6 @@ export default defineConfig({
   vite: {
     build: {
       cssMinify: true,
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            if (id.includes('youtube-loop')) return 'youtube';
-          },
-        },
-      },
     },
   },
 });

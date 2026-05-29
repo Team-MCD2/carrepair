@@ -1,23 +1,21 @@
-/** IDs YouTube — lecture des 30 premières secondes en boucle (sans téléchargement) */
-export const YOUTUBE = {
-  hero: 'CI8aM-MMI0E',
-  pourquoi: 'PVRqLIgtZ5o',
-  carrosserie: 'FQaYkfmLEUU',
-  achat: 'mYMVqLfj3T4',
-  apropos: 'eMBlkjCA298',
+/** Vidéos locales — 30 premières secondes (public/videos/) */
+export const VIDEOS = {
+  hero: '/videos/hero.mp4',
+  pourquoi: '/videos/pourquoi.mp4',
+  carrosserie: '/videos/carrosserie.mp4',
+  achat: '/videos/achat.mp4',
+  apropos: '/videos/apropos.mp4',
 } as const;
-
-export const LOOP_SECONDS = 30;
 
 export const POSTERS = {
   hero: '/assets/vehicules.png',
-  prestations: '/assets/prestations.jpeg',
-  equipe: '/assets/qui-somme-nous.jpeg',
+  prestations: '/assets/vehicules.png',
+  equipe: '/assets/vehicules.png',
   carrosserie: '/assets/logo-carrepair-carrosserie.png',
 } as const;
 
 export const showcaseVideos = [
-  { id: YOUTUBE.pourquoi, tag: 'Diagnostic', title: 'Contrôle sous véhicule' },
-  { id: YOUTUBE.carrosserie, tag: 'Carrosserie', title: 'Peinture de précision' },
-  { id: YOUTUBE.achat, tag: 'Véhicules', title: 'Achat & vente' },
+  { src: VIDEOS.pourquoi, poster: POSTERS.prestations, tag: 'Diagnostic', title: 'Contrôle sous véhicule' },
+  { src: VIDEOS.carrosserie, poster: POSTERS.carrosserie, tag: 'Carrosserie', title: 'Peinture de précision' },
+  { src: VIDEOS.achat, poster: POSTERS.hero, tag: 'Véhicules', title: 'Achat & vente' },
 ] as const;

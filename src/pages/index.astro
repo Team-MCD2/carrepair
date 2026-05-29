@@ -2,8 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroCinematic from '../components/HeroCinematic.astro';
 import VideoCard from '../components/VideoCard.astro';
-import YouTubeLoop from '../components/YouTubeLoop.astro';
-import { YOUTUBE, POSTERS, showcaseVideos } from '../data/videos';
+import LocalVideo from '../components/LocalVideo.astro';
+import { VIDEOS, POSTERS, showcaseVideos } from '../data/videos';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -97,7 +97,7 @@ const jsonLd = {
       </div>
       <div class="video-grid">
         {showcaseVideos.map((v, i) => (
-          <VideoCard videoId={v.id} tag={v.tag} title={v.title} delay={i * 150} />
+          <VideoCard src={v.src} poster={v.poster} tag={v.tag} title={v.title} delay={i * 150} />
         ))}
       </div>
     </div>
@@ -168,7 +168,7 @@ const jsonLd = {
           </div>
         </div>
         <div class="why-image-wrapper media-video reveal-on-scroll">
-          <YouTubeLoop videoId={YOUTUBE.pourquoi} cover={true} title="Pourquoi nous choisir" />
+          <LocalVideo src={VIDEOS.pourquoi} poster={POSTERS.equipe} cover={true} />
         </div>
       </div>
     </div>

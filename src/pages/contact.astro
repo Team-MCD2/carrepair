@@ -1,7 +1,7 @@
 ﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import YouTubeLoop from '../components/YouTubeLoop.astro';
-import { YOUTUBE } from '../data/videos';
+import LocalVideo from '../components/LocalVideo.astro';
+import { VIDEOS, POSTERS } from '../data/videos';
 ---
 
 <BaseLayout
@@ -13,7 +13,7 @@ import { YOUTUBE } from '../data/videos';
 <!-- Subpage Hero -->
     <section class="subpage-hero subpage-hero--video">
         <div class="hero-video-wrap" aria-hidden="true">
-            <YouTubeLoop videoId={YOUTUBE.hero} cover={true} class="hero-yt" />
+            <LocalVideo src={VIDEOS.hero} poster={POSTERS.hero} cover={true} class="hero-video" eager={true} />
         </div>
         <div class="container subpage-hero-content reveal-on-scroll">
             <ul class="breadcrumbs">
@@ -21,7 +21,7 @@ import { YOUTUBE } from '../data/videos';
                 <li class="active">Contact &amp; Devis</li>
             </ul>
             <h1 class="subpage-title text-gradient">Contactez-nous</h1>
-            <p class="subpage-desc">Une question, un besoin de r�paration ou une demande de devis personnalis� ? Notre �quipe vous r�pond sous 24 heures ouvr�es.</p>
+            <p class="subpage-desc">Une question, un besoin de réparation ou une demande de devis personnalisé ? Notre équipe vous répond sous 24 heures ouvrées.</p>
         </div>
     </section>
 

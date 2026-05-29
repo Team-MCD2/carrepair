@@ -1,0 +1,33 @@
+---
+interface Props {
+  src: string;
+  poster?: string;
+  class?: string;
+  cover?: boolean;
+  eager?: boolean;
+}
+
+const {
+  src,
+  poster,
+  class: className = '',
+  cover = false,
+  eager = false,
+} = Astro.props;
+
+const videoClass = ['bg-video', className, cover ? 'bg-video--cover' : ''].filter(Boolean).join(' ');
+---
+
+<video
+  class={videoClass}
+  muted
+  loop
+  playsinline
+  disablepictureinpicture
+  disableremoteplayback
+  poster={poster}
+  preload={eager ? 'auto' : 'metadata'}
+  data-bg-video
+>
+  <source src={src} type="video/mp4" />
+</video>

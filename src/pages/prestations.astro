@@ -1,19 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import YouTubeLoop from '../components/YouTubeLoop.astro';
-import { YOUTUBE } from '../data/videos';
+import LocalVideo from '../components/LocalVideo.astro';
+import { VIDEOS, POSTERS } from '../data/videos';
 ---
 
 <BaseLayout
   title="Nos Prestations — Mécanique, Carrosserie & Pneumatique | Car Repair Toulouse"
   description="Découvrez les prestations de Car Repair Toulouse : entretien mécanique, carrosserie, pneumatique et vente de véhicules."
   active="prestations"
-  ogImage="https://www.car-repair.fr/assets/prestations.jpeg"
+  ogImage="https://www.car-repair.fr/assets/vehicules.png"
 >
 <!-- Subpage Hero -->
     <section class="subpage-hero subpage-hero--video">
         <div class="hero-video-wrap" aria-hidden="true">
-            <YouTubeLoop videoId={YOUTUBE.hero} cover={true} class="hero-yt" />
+            <LocalVideo src={VIDEOS.hero} poster={POSTERS.prestations} cover={true} class="hero-video" eager={true} />
         </div>
         <div class="container subpage-hero-content reveal-on-scroll">
             <ul class="breadcrumbs">
@@ -69,7 +69,7 @@ import { YOUTUBE } from '../data/videos';
                     <a href="/contact/?service=mecanique" class="btn btn-primary">Demander un tarif</a>
                 </div>
                 <div class="prestation-media media-video">
-                    <YouTubeLoop videoId={YOUTUBE.pourquoi} cover={true} title="Mécanique" />
+                    <LocalVideo src={VIDEOS.pourquoi} poster={POSTERS.prestations} cover={true} />
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@ import { YOUTUBE } from '../data/videos';
         <div class="container">
             <div class="prestation-row">
                 <div class="prestation-media media-video">
-                    <YouTubeLoop videoId={YOUTUBE.carrosserie} cover={true} title="Carrosserie" />
+                    <LocalVideo src={VIDEOS.carrosserie} poster={POSTERS.carrosserie} cover={true} />
                 </div>
                 <div class="prestation-info">
                     <h2>Carrosserie &amp; Peinture</h2>
@@ -164,7 +164,7 @@ import { YOUTUBE } from '../data/videos';
         <div class="container">
             <div class="prestation-row">
                 <div class="prestation-media media-video">
-                    <YouTubeLoop videoId={YOUTUBE.achat} cover={true} title="Achat véhicule" />
+                    <LocalVideo src={VIDEOS.achat} poster={POSTERS.hero} cover={true} />
                 </div>
                 <div class="prestation-info">
                     <h2>Achat &amp; Vente de Véhicules</h2>
