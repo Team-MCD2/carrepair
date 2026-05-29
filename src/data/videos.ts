@@ -1,10 +1,28 @@
-/** Vidéos locales — 30 premières secondes (public/videos/) */
+/**
+ * Vidéos Cloudinary (`.env`) ou fichiers locaux `public/videos/` en secours.
+ */
+
+const cloud = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME as string | undefined;
+
+function cloudinaryUrl(publicIdOrUrl: string | undefined, localFallback: string): string {
+  if (!publicIdOrUrl?.trim()) return localFallback;
+  if (publicIdOrUrl.startsWith('http://') || publicIdOrUrl.startsWith('https://')) {
+    return publicIdOrUrl;
+  }
+  if (!cloud?.trim()) return localFallback;
+  const id = publicIdOrUrl.replace(/^\//, '').replace(/\.mp4$/i, '');
+  return `https://res.cloudinary.com/${cloud}/video/upload/q_auto:good,f_mp4,vc_auto/${id}.mp4`;
+}
+
 export const VIDEOS = {
-  hero: '/videos/hero.mp4',
-  pourquoi: '/videos/pourquoi.mp4',
-  carrosserie: '/videos/carrosserie.mp4',
-  achat: '/videos/achat.mp4',
-  apropos: '/videos/apropos.mp4',
+  hero: cloudinaryUrl(import.meta.env.PUBLIC_CLOUDINARY_VIDEO_HERO, '/videos/hero.mp4'),
+  /** Mécanique / diagnostic (garage mécanicien) */
+  pourquoi: cloudinaryUrl(import.meta.env.PUBLIC_CLOUDINARY_VIDEO_POURQUOI, '/videos/pourquoi.mp4'),
+  carrosserie: cloudinaryUrl(import.meta.env.PUBLIC_CLOUDINARY_VIDEO_CARROSSERIE, '/videos/carrosserie.mp4'),
+  achat: cloudinaryUrl(import.meta.env.PUBLIC_CLOUDINARY_VIDEO_ACHAT, '/videos/achat.mp4'),
+  apropos: cloudinaryUrl(import.meta.env.PUBLIC_CLOUDINARY_VIDEO_APROPOS, '/videos/apropos.mp4'),
+  atelier: cloudinaryUrl(import.meta.env.PUBLIC_CLOUDINARY_VIDEO_GARAGE_ATELIER, '/videos/garage-atelier.mp4'),
+  pneus: cloudinaryUrl(import.meta.env.PUBLIC_CLOUDINARY_VIDEO_GARAGE_PNEUS, '/videos/garage-pneus.mp4'),
 } as const;
 
 export const POSTERS = {

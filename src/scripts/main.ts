@@ -2,30 +2,9 @@ import { setupBackgroundVideos } from './bg-video';
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function dismissLoader() {
-  const loader = document.getElementById('site-loader');
-  document.body.classList.remove('is-loading');
-  document.body.classList.add('site-ready', 'hero-ready');
-  if (!loader) return;
-  loader.classList.add('is-done');
-  window.setTimeout(() => loader.remove(), 500);
-}
-
-function initLoader() {
-  const loader = document.getElementById('site-loader');
-  if (!loader || prefersReducedMotion) {
-    loader?.remove();
-    document.body.classList.add('site-ready', 'hero-ready');
-    return;
-  }
-
-  document.body.classList.add('is-loading');
-  window.setTimeout(dismissLoader, 1200);
-}
-
 function runWhenIdle(fn: () => void) {
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(fn, { timeout: 2000 });
+  if (typeof window.requestIdleCallback === 'function') {
+    window.requestIdleCallback(fn, { timeout: 1800 });
   } else {
     window.setTimeout(fn, 1);
   }
@@ -112,7 +91,7 @@ function initCards() {
     (entries, observer) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-card-visible');
+        entry.target.classList.add('animate-fade-in', 'is-card-visible');
         observer.unobserve(entry.target);
       });
     },
@@ -194,16 +173,19 @@ function initContactForm() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  initLoader();
-
   initHeader();
   initMenu();
   initFaq();
   initFooterToday();
   initContactForm();
 
-  if (!prefersReducedMotion) {
+  const hasVideos = Boolean(document.querySelector('[data-bg-video]'));
+
+  if (!prefersReducedMotion && hasVideos) {
     setupBackgroundVideos();
+  } else {
+    document.getElementById('site-loader')?.remove();
+    document.body.classList.add('site-ready', 'hero-ready');
   }
 
   runWhenIdle(() => {

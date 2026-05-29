@@ -1,0 +1,16 @@
+---
+/** Alias conservé pour compatibilité — utilise LocalVideo. */
+import LocalVideo from './LocalVideo.astro';
+
+interface Props {
+  src: string;
+  poster?: string;
+  class?: string;
+  cover?: boolean;
+  eager?: boolean;
+}
+
+const props = Astro.props;
+---
+
+<LocalVideo {...props} />

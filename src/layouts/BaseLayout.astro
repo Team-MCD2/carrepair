@@ -4,6 +4,8 @@ import Footer from '../components/Footer.astro';
 import SiteLoader from '../components/SiteLoader.astro';
 import '../styles/global.css';
 
+const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME as string | undefined;
+
 interface Props {
   title: string;
   description: string;
@@ -54,6 +56,13 @@ const hasVideos = Astro.url.pathname !== '/mentions-legales/';
 
     {preloadHeroImage && (
       <link rel="preload" as="image" href={preloadHeroImage} fetchpriority="high" />
+    )}
+
+    {cloudName && (
+      <>
+        <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+        <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+      </>
     )}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />

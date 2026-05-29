@@ -2137,9 +2137,22 @@ footer {
     }
 }
 
-/* Écran de chargement — animation voiture (~1,2 s) */
+/* Écran de chargement — synchro vidéos */
 body.is-loading {
     overflow: hidden;
+}
+
+body.is-loading main,
+body.is-loading header,
+body.is-loading footer {
+    opacity: 0;
+}
+
+body.site-ready main,
+body.site-ready header,
+body.site-ready footer {
+    opacity: 1;
+    transition: opacity 0.55s ease 0.08s;
 }
 
 .site-loader {
@@ -2150,7 +2163,7 @@ body.is-loading {
     align-items: center;
     justify-content: center;
     background: var(--noir);
-    transition: opacity 0.45s ease, visibility 0.45s ease;
+    transition: opacity 0.65s ease, visibility 0.65s ease;
 }
 
 .site-loader.is-done {
@@ -2159,48 +2172,47 @@ body.is-loading {
     pointer-events: none;
 }
 
-.car-loader {
-    width: min(200px, 55vw);
-}
-
-.car-loader-svg {
-    width: 100%;
-    height: auto;
-    display: block;
-    animation: carDrive 1s ease-in-out infinite alternate;
-}
-
-.car-loader-body {
-    transform-origin: 60px 38px;
-}
-
-.car-loader-road {
-    display: flex;
-    gap: 12px;
-    margin-top: 1rem;
+.site-loader-car {
+    position: relative;
+    width: min(280px, 70vw);
+    height: 80px;
     overflow: hidden;
+}
+
+.site-loader-road {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 12px;
     height: 3px;
+    background: repeating-linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.15) 0,
+        rgba(255, 255, 255, 0.15) 24px,
+        transparent 24px,
+        transparent 48px
+    );
+    background-size: 48px 3px;
+    animation: loaderRoad 0.55s linear infinite;
 }
 
-.car-loader-road span {
-    flex: 0 0 28px;
-    height: 3px;
-    background: rgba(230, 41, 26, 0.7);
-    border-radius: 2px;
-    animation: roadScroll 0.5s linear infinite;
+.site-loader-car-svg {
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
+    width: 100px;
+    height: auto;
+    transform: translateX(-50%);
+    animation: loaderCarBounce 0.45s ease-in-out infinite alternate;
+    filter: drop-shadow(0 4px 12px rgba(230, 41, 26, 0.35));
 }
 
-.car-loader-road span:nth-child(2) { animation-delay: 0.12s; }
-.car-loader-road span:nth-child(3) { animation-delay: 0.24s; }
-.car-loader-road span:nth-child(4) { animation-delay: 0.36s; }
-
-@keyframes carDrive {
-    0% { transform: translateX(-6px); }
-    100% { transform: translateX(6px); }
+@keyframes loaderRoad {
+    from { background-position: 0 0; }
+    to { background-position: -48px 0; }
 }
 
-@keyframes roadScroll {
-    0% { transform: translateX(40px); opacity: 0; }
-    30% { opacity: 1; }
-    100% { transform: translateX(-40px); opacity: 0; }
+@keyframes loaderCarBounce {
+    from { transform: translateX(-50%) translateY(0); }
+    to { transform: translateX(-50%) translateY(-3px); }
 }
