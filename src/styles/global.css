@@ -343,7 +343,8 @@ nav {
     overflow: hidden;
 }
 
-.hero-video-wrap {
+.hero-video-wrap,
+.hero-media {
     position: absolute;
     inset: 0;
     z-index: 0;
@@ -359,6 +360,48 @@ nav {
     will-change: transform;
 }
 
+/* Hero cinématique : image vehicules.png puis fondu vers la vidéo */
+.hero--cinematic .hero-media {
+    background-color: var(--noir);
+}
+
+.hero--cinematic .hero-poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 2;
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero--cinematic .hero-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    opacity: 0;
+    transform: scale(1.06);
+    transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero--cinematic.is-video-playing .hero-poster {
+    opacity: 0;
+    transform: scale(1.08);
+    pointer-events: none;
+}
+
+.hero--cinematic.is-video-playing .hero-video {
+    opacity: 1;
+    transform: scale(1.02);
+}
+
 .hero::before {
     content: '';
     position: absolute;
@@ -372,8 +415,8 @@ nav {
 }
 
 .hero--video::before {
-    background: linear-gradient(to right, rgba(11, 11, 11, 0.92) 35%, rgba(11, 11, 11, 0.45) 100%),
-                linear-gradient(to bottom, rgba(11, 11, 11, 0.7) 0%, rgba(11, 11, 11, 0.96) 100%);
+    background: linear-gradient(to right, rgba(11, 11, 11, 0.88) 38%, rgba(11, 11, 11, 0.35) 100%),
+                linear-gradient(to bottom, rgba(11, 11, 11, 0.55) 0%, rgba(11, 11, 11, 0.88) 100%);
 }
 
 body.hero-ready .hero .reveal-item {
@@ -392,8 +435,13 @@ body.hero-ready .hero .reveal-item:nth-child(4) { animation-delay: 0.55s; }
 
 .hero-content {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     max-width: 650px;
+}
+
+.hero--cinematic .container {
+    position: relative;
+    z-index: 3;
 }
 
 .hero-tagline {
@@ -1689,10 +1737,20 @@ footer {
         display: none;
     }
 
-    .hero--video {
+    .hero--video,
+    .hero--cinematic {
         background-image: url('/assets/vehicules.png');
         background-size: cover;
         background-position: center;
+    }
+
+    .hero--cinematic .hero-video {
+        display: none;
+    }
+
+    .hero--cinematic .hero-poster {
+        opacity: 1 !important;
+        transform: none !important;
     }
 
     .media-video .why-img-fallback,

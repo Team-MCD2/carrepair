@@ -1,0 +1,32 @@
+---
+import { VIDEOS, POSTERS } from '../data/videos';
+
+interface Props {
+  videoSrc?: string;
+  posterSrc?: string;
+}
+
+const { videoSrc = VIDEOS.hero, posterSrc = POSTERS.hero } = Astro.props;
+---
+
+<section class="hero hero--video hero--cinematic">
+  <div class="hero-media" aria-hidden="true">
+    <img
+      src={posterSrc}
+      alt=""
+      class="hero-poster"
+      width="1920"
+      height="1080"
+      fetchpriority="high"
+      decoding="async"
+    />
+    <video class="hero-video" muted loop playsinline preload="auto" data-hero-cinematic>
+      <source src={videoSrc} type="video/mp4" />
+    </video>
+  </div>
+  <div class="container">
+    <div class="hero-content">
+      <slot />
+    </div>
+  </div>
+</section>

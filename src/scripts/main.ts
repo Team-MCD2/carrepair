@@ -8,9 +8,37 @@ function playVideo(video: HTMLVideoElement) {
   }
 }
 
+function setupHeroCinematic() {
+  const hero = document.querySelector<HTMLElement>('.hero--cinematic');
+  if (!hero) return;
+
+  const video = hero.querySelector<HTMLVideoElement>('[data-hero-cinematic]');
+  if (!video) return;
+
+  if (prefersReducedMotion) {
+    hero.classList.add('is-video-playing');
+    return;
+  }
+
+  const startTransition = () => {
+    playVideo(video);
+    hero.classList.add('is-video-playing');
+  };
+
+  video.addEventListener('canplay', () => {
+    if (!hero.classList.contains('is-video-playing')) startTransition();
+  }, { once: true });
+
+  video.load();
+
+  window.setTimeout(() => {
+    if (!hero.classList.contains('is-video-playing')) startTransition();
+  }, 2200);
+}
+
 function setupLazyVideos() {
   const videos = document.querySelectorAll<HTMLVideoElement>(
-    '[data-bg-video], [data-lazy-video], .video-card-player'
+    '[data-bg-video]:not([data-hero-cinematic]), [data-lazy-video], .video-card-player'
   );
 
   if (!videos.length || prefersReducedMotion) return;
@@ -168,6 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.trust-number[data-count]').forEach((el) => counterObserver.observe(el));
   }
 
+  setupHeroCinematic();
   setupLazyVideos();
 
   const form = document.getElementById('contact-form') as HTMLFormElement | null;

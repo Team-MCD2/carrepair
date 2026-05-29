@@ -12,7 +12,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <section class="subpage-hero subpage-hero--video">
         <div class="hero-video-wrap" aria-hidden="true">
             <video class="hero-video" data-bg-video muted loop playsinline poster="/assets/prestations.jpeg">
-                <source src="/videos/garage-atelier.mp4" type="video/mp4">
+                <source src="/videos/garage-mecanicien.mp4" type="video/mp4">
             </video>
         </div>
         <div class="container subpage-hero-content reveal-on-scroll">
@@ -69,10 +69,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
                     <a href="/contact.html?service=mecanique" class="btn btn-primary">Demander un tarif</a>
                 </div>
                 <div class="prestation-media media-video">
-                    <video class="prestation-video" data-bg-video muted loop playsinline poster="/assets/prestations.jpeg">
-                        <source src="/videos/garage-atelier.mp4" type="video/mp4">
+                    <video class="prestation-video" data-bg-video muted loop playsinline preload="none" poster="/assets/prestations.jpeg">
+                        <source src="/videos/garage-mecanicien.mp4" type="video/mp4">
                     </video>
-                    <img src="/assets/prestations.jpeg" alt="Mécanicien en train d'effectuer une révision sous le capot d'une voiture" class="prestation-img prestation-img-fallback">
                 </div>
             </div>
         </div>
@@ -172,7 +171,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <div class="prestation-row">
                 <div class="prestation-media media-video">
                     <video class="prestation-video" data-bg-video muted loop playsinline preload="none" poster="/assets/vehicules.png">
-                        <source src="/videos/hero.mp4" type="video/mp4">
+                        <source src="/videos/garage-atelier.mp4" type="video/mp4">
                     </video>
                 </div>
                 <div class="prestation-info">
