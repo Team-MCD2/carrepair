@@ -1,15 +1,12 @@
-/**
- * Vidéos garage (sources Pexels, libres de droits — sans mention sur le site).
- * Fichiers hébergés localement dans public/videos/
- */
+/** Vidéos hébergées localement dans public/videos/ */
 export const VIDEOS = {
-  /** Mécanicien sous véhicule — hero & diagnostic */
-  hero: '/videos/garage-mecanicien.mp4',
-  mecanicien: '/videos/garage-mecanicien.mp4',
-  /** Clé à chocs / pneumatique */
+  hero: '/videos/hero.mp4',
+  pourquoi: '/videos/pourquoi.mp4',
+  carrosserie: '/videos/carrosserie.mp4',
+  achatVehicule: '/videos/achat-vehicule.mp4',
+  aPropos: '/videos/a-propos.mp4',
   pneus: '/videos/garage-pneus.mp4',
-  /** Atelier automobile */
-  atelier: '/videos/garage-atelier.mp4',
+  mecanique: '/videos/garage-mecanicien.mp4',
 } as const;
 
 export const POSTERS = {
@@ -21,10 +18,10 @@ export const POSTERS = {
 
 export const showcaseVideos = [
   {
-    src: VIDEOS.mecanicien,
+    src: VIDEOS.mecanique,
     poster: POSTERS.prestations,
-    tag: 'Diagnostic',
-    title: 'Contrôle sous véhicule',
+    tag: 'Mécanique',
+    title: 'Entretien moteur',
   },
   {
     src: VIDEOS.pneus,
@@ -33,9 +30,9 @@ export const showcaseVideos = [
     title: 'Montage & serrage pro',
   },
   {
-    src: VIDEOS.atelier,
-    poster: POSTERS.equipe,
-    tag: 'Atelier',
-    title: 'Réparation en garage',
+    src: VIDEOS.carrosserie,
+    poster: POSTERS.carrosserie,
+    tag: 'Carrosserie',
+    title: 'Peinture & finitions',
   },
 ] as const;
