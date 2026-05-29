@@ -2,8 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeroCinematic from '../components/HeroCinematic.astro';
 import VideoCard from '../components/VideoCard.astro';
-import MediaVideo from '../components/MediaVideo.astro';
-import { VIDEOS, POSTERS, showcaseVideos } from '../data/videos';
+import YouTubeLoop from '../components/YouTubeLoop.astro';
+import { YOUTUBE, POSTERS, showcaseVideos } from '../data/videos';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -53,11 +53,11 @@ const jsonLd = {
       CAR REPAIR prend soin de votre véhicule. Profitez d'une expertise multimarque de qualité, de tarifs compétitifs et de mécaniciens passionnés au cœur de Toulouse.
     </p>
     <div class="hero-buttons reveal-item">
-      <a href="/contact.html" class="btn btn-primary">
+      <a href="/contact/" class="btn btn-primary">
         Prendre Rendez-vous
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
       </a>
-      <a href="/prestations.html" class="btn btn-secondary">Découvrir Prestations</a>
+      <a href="/prestations/" class="btn btn-secondary">Découvrir Prestations</a>
     </div>
   </HeroCinematic>
 
@@ -81,7 +81,7 @@ const jsonLd = {
         </div>
         <div class="trust-item reveal-on-scroll" data-delay="300">
           <span class="trust-number" data-count="2021">2021</span>
-          <span class="trust-text">À votre service</span>
+          <span class="trust-text">ì votre service</span>
           <span class="trust-sub">Garage local toulousain</span>
         </div>
       </div>
@@ -96,7 +96,7 @@ const jsonLd = {
       </div>
       <div class="video-grid">
         {showcaseVideos.map((v, i) => (
-          <VideoCard src={v.src} poster={v.poster} tag={v.tag} title={v.title} delay={i * 150} />
+          <VideoCard videoId={v.id} poster={v.poster} tag={v.tag} title={v.title} delay={i * 150} />
         ))}
       </div>
     </div>
@@ -115,7 +115,7 @@ const jsonLd = {
           </div>
           <h3 class="service-title">Mécanique Générale</h3>
           <p>Vidange, révision, freinage, embrayage, kit de distribution. Nous intervenons sur l'ensemble de la motorisation et des organes mécaniques.</p>
-          <a href="/prestations.html#mecanique" class="service-link">En savoir plus <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+          <a href="/prestations/#mecanique" class="service-link">En savoir plus <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         </div>
         <div class="service-card">
           <div class="service-icon">
@@ -123,7 +123,7 @@ const jsonLd = {
           </div>
           <h3 class="service-title">Carrosserie &amp; Peinture</h3>
           <p>Débosselage, traitement des rayures, peinture de précision et restauration plastique pour redonner à votre véhicule son aspect d'origine.</p>
-          <a href="/prestations.html#carrosserie" class="service-link">En savoir plus <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+          <a href="/prestations/#carrosserie" class="service-link">En savoir plus <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         </div>
         <div class="service-card">
           <div class="service-icon">
@@ -131,7 +131,7 @@ const jsonLd = {
           </div>
           <h3 class="service-title">Pneumatique</h3>
           <p>Spécialistes du pneu. Montage rapide, équilibrage professionnel et contrôle géométrique pour assurer votre tenue de route et votre sécurité.</p>
-          <a href="/prestations.html#pneumatique" class="service-link">En savoir plus <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+          <a href="/prestations/#pneumatique" class="service-link">En savoir plus <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
         </div>
       </div>
     </div>
@@ -166,8 +166,8 @@ const jsonLd = {
             </div>
           </div>
         </div>
-        <div class="why-image-wrapper reveal-on-scroll">
-          <MediaVideo src={VIDEOS.mecanicien} poster={POSTERS.equipe} />
+        <div class="why-image-wrapper media-video reveal-on-scroll">
+          <YouTubeLoop videoId={YOUTUBE.pourquoi} poster={POSTERS.equipe} cover={true} title="Pourquoi nous choisir" />
         </div>
       </div>
     </div>
@@ -188,7 +188,7 @@ const jsonLd = {
             </div>
             <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="google-g" width="18" height="18" loading="lazy" />
           </div>
-          <div class="review-stars">★ ★ ★ ★ ★</div>
+          <div class="review-stars">☎& ☎& ☎& ☎& ☎&</div>
           <p class="review-content">"Excellent accueil de l'équipe de Car Repair. Ils ont diagnostiqué un problème d'injecteur que d'autres garages n'avaient pas résolu. Facture très honnête et délais respectés."</p>
         </div>
         <div class="review-card">
@@ -199,7 +199,7 @@ const jsonLd = {
             </div>
             <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="google-g" width="18" height="18" loading="lazy" />
           </div>
-          <div class="review-stars">★ ★ ★ ★ ★</div>
+          <div class="review-stars">☎& ☎& ☎& ☎& ☎&</div>
           <p class="review-content">"Je suis venue pour le montage de mes pneus neufs et un parallélisme. Service ultra rapide, café offert pendant l'attente et explications claires."</p>
         </div>
         <div class="review-card">
@@ -210,7 +210,7 @@ const jsonLd = {
             </div>
             <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google" class="google-g" width="18" height="18" loading="lazy" />
           </div>
-          <div class="review-stars">★ ★ ★ ★ ★</div>
+          <div class="review-stars">☎& ☎& ☎& ☎& ☎&</div>
           <p class="review-content">"Rénovation complète de ma carrosserie latérale suite à un frottement. Travail impeccable, la peinture est identique à celle d'origine."</p>
         </div>
       </div>
@@ -223,7 +223,7 @@ const jsonLd = {
           </div>
         </div>
         <div class="summary-stars">
-          <div class="stars">★ ★ ★ ★ ★</div>
+          <div class="stars">☎& ☎& ☎& ☎& ☎&</div>
           <p style="margin:0; font-size:0.85rem; color:var(--gris);">Sur la base de plus de 500 avis</p>
         </div>
         <a href="https://search.google.com/local/reviews?placeid=ChIJ31300_CarRepairToulouse" target="_blank" rel="noopener noreferrer" class="btn btn-outline" style="padding: 0.7rem 1.5rem; font-size: 0.9rem;">Laisser un avis Google</a>
@@ -240,8 +240,9 @@ const jsonLd = {
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
           05 62 83 74 29
         </a>
-        <a href="/contact.html" class="btn btn-primary">Prendre RDV en ligne</a>
+        <a href="/contact/" class="btn btn-primary">Prendre RDV en ligne</a>
       </div>
     </div>
   </section>
 </BaseLayout>
+

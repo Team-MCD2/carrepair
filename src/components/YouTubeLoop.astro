@@ -1,0 +1,24 @@
+---
+interface Props {
+  videoId: string;
+  poster?: string;
+  title?: string;
+  class?: string;
+  cover?: boolean;
+}
+
+const { videoId, poster, title = 'Vid�o', class: className = '', cover = false } = Astro.props;
+---
+
+<div
+  class:list={['yt-loop', className, { 'yt-loop--cover': cover }]}
+  data-yt-loop
+  data-yt-id={videoId}
+  data-yt-max="30"
+>
+  {poster && (
+    <img src={poster} alt="" class="yt-loop-poster" loading="lazy" decoding="async" />
+  )}
+  <div class="yt-loop-player" aria-label={title}></div>
+</div>
+

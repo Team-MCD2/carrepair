@@ -1,32 +1,27 @@
-﻿---
+---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import SubpageHero from '../components/SubpageHero.astro';
-import { VIDEOS, POSTERS } from '../data/videos';
-
-const jsonLd = undefined;
+import YouTubeLoop from '../components/YouTubeLoop.astro';
+import { YOUTUBE, POSTERS } from '../data/videos';
 ---
 
 <BaseLayout
   title="À Propos — Garage Car Repair à Toulouse depuis 2021"
-  description="Découvrez Car Repair, réparateur auto multimarque à Toulouse. Qualité, prix et professionnalisme."
+  description="Découvrez l'histoire de Car Repair, réparateur auto multimarque et spécialiste pneumatique à Toulouse (31300). Nos engagements : qualité, prix, et professionnalisme."
   active="a-propos"
   ogImage="https://www.car-repair.fr/assets/qui-somme-nous.jpeg"
-  jsonLd={jsonLd}
 >
 <!-- Subpage Hero -->
     <section class="subpage-hero subpage-hero--video">
         <div class="hero-video-wrap" aria-hidden="true">
-            <video class="hero-video" data-bg-video muted loop playsinline poster="/assets/qui-somme-nous.jpeg">
-                <source src="/videos/garage-pneus.mp4" type="video/mp4">
-            </video>
+            <YouTubeLoop videoId={YOUTUBE.apropos} poster={POSTERS.equipe} cover={true} class="hero-yt" />
         </div>
         <div class="container subpage-hero-content reveal-on-scroll">
             <ul class="breadcrumbs">
-                <li><a href="/index.html">Accueil</a></li>
-                <li class="active">À Propos</li>
+                <li><a href="/">Accueil</a></li>
+                <li class="active">� Propos</li>
             </ul>
             <h1 class="subpage-title text-gradient">Notre Histoire &amp; Engagements</h1>
-            <p class="subpage-desc">Découvrez l'équipe et les valeurs fondamentales qui guident notre garage au quotidien pour l'entretien de votre voiture à Toulouse.</p>
+            <p class="subpage-desc">D�couvrez l'�quipe et les valeurs fondamentales qui guident notre garage au quotidien pour l'entretien de votre voiture � Toulouse.</p>
         </div>
     </section>
 
@@ -35,15 +30,13 @@ const jsonLd = undefined;
         <div class="container">
             <div class="about-grid">
                 <div class="about-text">
-                    <h2>Un garage local à taille humaine</h2>
-                    <p>Fondé en 2021 à Toulouse, le garage <strong>CAR REPAIR</strong> s'est imposé comme une alternative de confiance aux grands réseaux concessionnaires traditionnels. En tant que réparateur multimarque indépendant, nous nous attachons à offrir un service personnalisé et rigoureux.</p>
-                    <p>Notre philosophie repose sur la transparence technique et tarifaire. Avant toute intervention, notre chef d'atelier examine votre véhicule avec vous, détecte précisément les réparations nécessaires et établit un devis détaillé. Aucun frais supplémentaire n'est appliqué sans votre accord préalable.</p>
-                    <p>Spécialistes également de la liaison au sol et du pneumatique, nous sommes équipés des machines de montage et de géométrie 3D de dernière génération pour garantir le parfait parallélisme de vos trains roulants.</p>
+                    <h2>Un garage local � taille humaine</h2>
+                    <p>Fond� en 2021 � Toulouse, le garage <strong>CAR REPAIR</strong> s'est impos� comme une alternative de confiance aux grands r�seaux concessionnaires traditionnels. En tant que r�parateur multimarque ind�pendant, nous nous attachons � offrir un service personnalis� et rigoureux.</p>
+                    <p>Notre philosophie repose sur la transparence technique et tarifaire. Avant toute intervention, notre chef d'atelier examine votre v�hicule avec vous, d�tecte pr�cis�ment les r�parations n�cessaires et �tablit un devis d�taill�. Aucun frais suppl�mentaire n'est appliqu� sans votre accord pr�alable.</p>
+                    <p>Sp�cialistes �galement de la liaison au sol et du pneumatique, nous sommes �quip�s des machines de montage et de g�om�trie 3D de derni�re g�n�ration pour garantir le parfait parall�lisme de vos trains roulants.</p>
                 </div>
                 <div class="about-media media-video">
-                    <video class="prestation-video" data-bg-video muted loop playsinline preload="none" poster="/assets/qui-somme-nous.jpeg">
-                        <source src="/videos/garage-mecanicien.mp4" type="video/mp4">
-                    </video>
+                    <YouTubeLoop videoId={YOUTUBE.apropos} poster={POSTERS.equipe} cover={true} title="Notre �quipe" />
                 </div>
             </div>
         </div>
@@ -54,7 +47,7 @@ const jsonLd = undefined;
         <div class="container">
             <div class="section-header">
                 <h2 class="section-title">Nos 3 Engagements Majeurs</h2>
-                <p>Pour chaque entretien ou réparation, nous garantissons un niveau d'exigence maximal afin d'assurer votre entière satisfaction.</p>
+                <p>Pour chaque entretien ou r�paration, nous garantissons un niveau d'exigence maximal afin d'assurer votre enti�re satisfaction.</p>
             </div>
             
             <div class="engagements-grid">
@@ -63,16 +56,16 @@ const jsonLd = undefined;
                     <div class="engagement-icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     </div>
-                    <h3>Service de Qualité</h3>
-                    <p>Des diagnostics précis et l'utilisation exclusive de pièces homologuées de première monte. Nous respectons scrupuleusement le carnet d'entretien constructeur pour préserver votre garantie.</p>
+                    <h3>Service de Qualit�</h3>
+                    <p>Des diagnostics pr�cis et l'utilisation exclusive de pi�ces homologu�es de premi�re monte. Nous respectons scrupuleusement le carnet d'entretien constructeur pour pr�server votre garantie.</p>
                 </div>
                 <!-- Card 2 -->
                 <div class="engagement-card">
                     <div class="engagement-icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                     </div>
-                    <h3>Techniciens Qualifiés</h3>
-                    <p>Notre équipe de mécaniciens et carrossiers est formée régulièrement aux nouvelles technologies automobiles (motorisations récentes, systèmes électroniques de bord, climatisation, etc.).</p>
+                    <h3>Techniciens Qualifi�s</h3>
+                    <p>Notre �quipe de m�caniciens et carrossiers est form�e r�guli�rement aux nouvelles technologies automobiles (motorisations r�centes, syst�mes �lectroniques de bord, climatisation, etc.).</p>
                 </div>
                 <!-- Card 3 -->
                 <div class="engagement-card">
@@ -80,7 +73,7 @@ const jsonLd = undefined;
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                     </div>
                     <h3>Tarifs Transparents</h3>
-                    <p>Pas de mauvaise surprise lors du retrait de votre véhicule. Nos prix de pièces de rechange et taux de main-d'œuvre sont parmi les plus compétitifs de la région toulousaine.</p>
+                    <p>Pas de mauvaise surprise lors du retrait de votre v�hicule. Nos prix de pi�ces de rechange et taux de main-d'Suvre sont parmi les plus comp�titifs de la r�gion toulousaine.</p>
                 </div>
             </div>
         </div>
@@ -90,8 +83,8 @@ const jsonLd = undefined;
     <section class="section-padding">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Où nous trouver ?</h2>
-                <p>Situé dans le quartier de Patte d'Oie / Saint Cyprien à Toulouse, notre garage est facile d'accès.</p>
+                <h2 class="section-title">O� nous trouver ?</h2>
+                <p>Situ� dans le quartier de Patte d'Oie / Saint Cyprien � Toulouse, notre garage est facile d'acc�s.</p>
             </div>
             
             <div class="map-container">
@@ -105,17 +98,18 @@ const jsonLd = undefined;
     <section class="cta-banner">
         <div class="container cta-container">
             <h2 class="cta-title">Besoin d'un rendez-vous rapide ?</h2>
-            <p class="cta-desc">Appelez nos conseillers dès aujourd'hui ou planifiez votre venue directement via notre formulaire de contact.</p>
+            <p class="cta-desc">Appelez nos conseillers d�s aujourd'hui ou planifiez votre venue directement via notre formulaire de contact.</p>
             <div class="cta-actions">
                 <a href="tel:0562837429" class="phone-big">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                     05 62 83 74 29
                 </a>
-                <a href="/contact.html" class="btn btn-primary">Prendre rendez-vous</a>
+                <a href="/contact/" class="btn btn-primary">Prendre rendez-vous</a>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
 </BaseLayout>
+
 

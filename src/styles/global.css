@@ -360,7 +360,7 @@ nav {
     will-change: transform;
 }
 
-/* Hero cinématique : image vehicules.png puis fondu vers la vidéo */
+/* Hero cin�matique : image vehicules.png puis fondu vers la vid�o */
 .hero--cinematic .hero-media {
     background-color: var(--noir);
 }
@@ -397,9 +397,100 @@ nav {
     pointer-events: none;
 }
 
-.hero--cinematic.is-video-playing .hero-video {
+.hero--cinematic.is-video-playing .hero-video,
+.hero--cinematic.is-video-playing .hero-yt {
     opacity: 1;
     transform: scale(1.02);
+}
+
+.hero--cinematic .hero-poster.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.hero--cinematic .hero-yt {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero--cinematic.is-video-playing .hero-yt {
+    opacity: 1;
+}
+
+/* YouTube int�gr� (30 s en boucle, sans ffmpeg) */
+.yt-loop {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    background: var(--noir);
+    overflow: hidden;
+}
+
+.yt-loop--cover {
+    position: absolute;
+    inset: 0;
+    min-height: 100%;
+}
+
+.yt-loop-poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    transition: opacity 0.8s ease;
+}
+
+.yt-loop-poster.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.yt-loop-player {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+}
+
+.yt-loop-player iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 56.25vw;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+    border: 0;
+    pointer-events: none;
+}
+
+.yt-loop.is-playing .yt-loop-poster {
+    opacity: 0;
+}
+
+.video-card .yt-loop {
+    min-height: 100%;
+    aspect-ratio: 16 / 10;
+}
+
+.video-card .yt-loop--cover {
+    position: absolute;
+    inset: 0;
+}
+
+.why-image-wrapper.media-video .yt-loop,
+.prestation-media.media-video .yt-loop {
+    min-height: 280px;
+}
+
+.prestation-media.media-video .yt-loop {
+    min-height: 400px;
 }
 
 .hero::before {

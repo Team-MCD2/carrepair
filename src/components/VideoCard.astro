@@ -1,21 +1,22 @@
 ---
+import YouTubeLoop from './YouTubeLoop.astro';
+
 interface Props {
-  src: string;
+  videoId: string;
   poster: string;
   tag: string;
   title: string;
   delay?: number;
 }
 
-const { src, poster, tag, title, delay = 0 } = Astro.props;
+const { videoId, poster, tag, title, delay = 0 } = Astro.props;
 ---
 
 <article class="video-card reveal-on-scroll" data-delay={delay}>
-  <video class="video-card-player" muted loop playsinline preload="none" poster={poster} data-lazy-video>
-    <source src={src} type="video/mp4" />
-  </video>
+  <YouTubeLoop videoId={videoId} poster={poster} cover={true} title={title} />
   <div class="video-card-overlay">
     <span class="video-card-tag">{tag}</span>
     <h3>{title}</h3>
   </div>
 </article>
+

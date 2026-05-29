@@ -1,72 +1,6 @@
+import { setupYouTubeLoops } from './youtube-loop';
+
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-function playVideo(video: HTMLVideoElement) {
-  if (video.readyState >= 2) {
-    video.play().catch(() => {});
-  } else {
-    video.addEventListener('loadeddata', () => video.play().catch(() => {}), { once: true });
-  }
-}
-
-function setupHeroCinematic() {
-  const hero = document.querySelector<HTMLElement>('.hero--cinematic');
-  if (!hero) return;
-
-  const video = hero.querySelector<HTMLVideoElement>('[data-hero-cinematic]');
-  if (!video) return;
-
-  if (prefersReducedMotion) {
-    hero.classList.add('is-video-playing');
-    return;
-  }
-
-  const startTransition = () => {
-    playVideo(video);
-    hero.classList.add('is-video-playing');
-  };
-
-  video.addEventListener('canplay', () => {
-    if (!hero.classList.contains('is-video-playing')) startTransition();
-  }, { once: true });
-
-  video.load();
-
-  window.setTimeout(() => {
-    if (!hero.classList.contains('is-video-playing')) startTransition();
-  }, 2200);
-}
-
-function setupLazyVideos() {
-  const videos = document.querySelectorAll<HTMLVideoElement>(
-    '[data-bg-video]:not([data-hero-cinematic]), [data-lazy-video], .video-card-player'
-  );
-
-  if (!videos.length || prefersReducedMotion) return;
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        const video = entry.target as HTMLVideoElement;
-        const card = video.closest('.video-card');
-
-        if (entry.isIntersecting) {
-          if (video.preload === 'none' && !video.dataset.loaded) {
-            video.load();
-            video.dataset.loaded = 'true';
-          }
-          playVideo(video);
-          card?.classList.add('is-playing');
-        } else {
-          video.pause();
-          card?.classList.remove('is-playing');
-        }
-      });
-    },
-    { rootMargin: '80px', threshold: 0.2 }
-  );
-
-  videos.forEach((video) => observer.observe(video));
-}
 
 document.addEventListener('DOMContentLoaded', () => {
   const header = document.querySelector('header');
@@ -194,10 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!prefersReducedMotion) {
     document.querySelectorAll('.trust-number[data-count]').forEach((el) => counterObserver.observe(el));
+    setupYouTubeLoops();
   }
-
-  setupHeroCinematic();
-  setupLazyVideos();
 
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   if (form) {
@@ -219,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const last = (document.getElementById('lastname') as HTMLInputElement).value;
       const service = select?.options[select.selectedIndex]?.text || '';
       alert(
-        `Merci ${first} ${last} !\nVotre demande concernant "${service}" a bien été enregistrée (simulation).\nNous vous recontacterons sous 24h.`
+        `Merci ${first} ${last} !\nVotre demande concernant "${service}" a bien �t� enregistr�e (simulation).\nNous vous recontacterons sous 24h.`
       );
       form.reset();
     });

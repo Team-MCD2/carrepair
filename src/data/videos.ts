@@ -1,16 +1,13 @@
-/**
- * Vidéos garage (sources Pexels, libres de droits — sans mention sur le site).
- * Fichiers hébergés localement dans public/videos/
- */
-export const VIDEOS = {
-  /** Mécanicien sous véhicule — hero & diagnostic */
-  hero: '/videos/garage-mecanicien.mp4',
-  mecanicien: '/videos/garage-mecanicien.mp4',
-  /** Clé à chocs / pneumatique */
-  pneus: '/videos/garage-pneus.mp4',
-  /** Atelier automobile */
-  atelier: '/videos/garage-atelier.mp4',
+/** IDs YouTube  lecture des 30 premi�res secondes en boucle (sans t�l�chargement) */
+export const YOUTUBE = {
+  hero: 'CI8aM-MMI0E',
+  pourquoi: 'PVRqLIgtZ5o',
+  carrosserie: 'FQaYkfmLEUU',
+  achat: 'mYMVqLfj3T4',
+  apropos: 'eMBlkjCA298',
 } as const;
+
+export const LOOP_SECONDS = 30;
 
 export const POSTERS = {
   hero: '/assets/vehicules.png',
@@ -20,22 +17,7 @@ export const POSTERS = {
 } as const;
 
 export const showcaseVideos = [
-  {
-    src: VIDEOS.mecanicien,
-    poster: POSTERS.prestations,
-    tag: 'Diagnostic',
-    title: 'Contrôle sous véhicule',
-  },
-  {
-    src: VIDEOS.pneus,
-    poster: POSTERS.hero,
-    tag: 'Pneumatique',
-    title: 'Montage & serrage pro',
-  },
-  {
-    src: VIDEOS.atelier,
-    poster: POSTERS.equipe,
-    tag: 'Atelier',
-    title: 'Réparation en garage',
-  },
+  { id: YOUTUBE.pourquoi, poster: POSTERS.prestations, tag: 'Diagnostic', title: 'Contr�le sous v�hicule' },
+  { id: YOUTUBE.carrosserie, poster: POSTERS.carrosserie, tag: 'Carrosserie', title: 'Peinture de pr�cision' },
+  { id: YOUTUBE.achat, poster: POSTERS.hero, tag: 'V�hicules', title: 'Achat & vente' },
 ] as const;
