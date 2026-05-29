@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import SiteLoader from '../components/SiteLoader.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -24,6 +25,7 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, 'https://www.car-repair.fr/').href;
+const hasVideos = Astro.url.pathname !== '/mentions-legales/';
 ---
 
 <!DOCTYPE html>
@@ -72,6 +74,7 @@ const canonical = new URL(Astro.url.pathname, 'https://www.car-repair.fr/').href
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body>
+    {hasVideos && <SiteLoader />}
     <Header active={active} />
     <main>
       <slot />

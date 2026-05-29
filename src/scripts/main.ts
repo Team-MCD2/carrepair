@@ -143,9 +143,17 @@ function initCounters() {
 }
 
 async function initYouTube() {
-  if (prefersReducedMotion || !document.querySelector('[data-yt-loop]')) return;
+  const hasVideos = Boolean(document.querySelector('[data-yt-loop]'));
+  if (prefersReducedMotion) {
+    document.getElementById('site-loader')?.remove();
+    return;
+  }
+  if (!hasVideos) {
+    document.getElementById('site-loader')?.remove();
+    return;
+  }
   const { setupYouTubeLoops } = await import('./youtube-loop');
-  setupYouTubeLoops();
+  await setupYouTubeLoops();
 }
 
 function initContactForm() {
@@ -177,20 +185,22 @@ function initContactForm() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  if (document.querySelector('[data-yt-loop]')) {
+    document.body.classList.add('is-loading');
+  }
+
   initHeader();
   initMenu();
   initFaq();
   initFooterToday();
   initContactForm();
-  requestAnimationFrame(() => document.body.classList.add('hero-ready'));
 
-  runWhenIdle(() => {
-    initReveal();
-    initCards();
-    initCounters();
-  });
-
-  runWhenIdle(() => {
-    void initYouTube();
+  void initYouTube().then(() => {
+    requestAnimationFrame(() => document.body.classList.add('hero-ready'));
+    runWhenIdle(() => {
+      initReveal();
+      initCards();
+      initCounters();
+    });
   });
 });

@@ -1,0 +1,21 @@
+---
+import logoImg from '../assets/logo.png';
+---
+
+<div id="site-loader" class="site-loader" aria-live="polite" aria-busy="true">
+  <div class="site-loader-inner">
+    <img
+      src={logoImg.src}
+      alt=""
+      class="site-loader-logo"
+      width="72"
+      height="72"
+      decoding="async"
+    />
+    <div class="site-loader-brand">Car<span>Repair</span></div>
+    <div class="site-loader-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <span class="site-loader-bar"></span>
+    </div>
+    <p class="site-loader-text">Préparation de l'expérience…</p>
+  </div>
+</div>
