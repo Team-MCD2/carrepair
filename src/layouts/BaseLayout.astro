@@ -14,7 +14,6 @@ interface Props {
   noindex?: boolean;
   jsonLd?: object;
   preloadHeroImage?: string;
-  preloadHeroVideo?: string;
 }
 
 const {
@@ -25,7 +24,6 @@ const {
   noindex = false,
   jsonLd,
   preloadHeroImage,
-  preloadHeroVideo,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, 'https://www.car-repair.fr/').href;
@@ -60,10 +58,6 @@ const hasVideos = Astro.url.pathname !== '/mentions-legales/';
       <link rel="preload" as="image" href={preloadHeroImage} fetchpriority="high" />
     )}
 
-    {preloadHeroVideo && (
-      <link rel="preload" as="video" href={preloadHeroVideo} type="video/mp4" />
-    )}
-
     {cloudName && (
       <>
         <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
@@ -88,8 +82,13 @@ const hasVideos = Astro.url.pathname !== '/mentions-legales/';
 
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
-  <body>
+  <body class="site-ready hero-ready">
     {hasVideos && <SiteLoader />}
+    {hasVideos && (
+      <script is:inline>
+        {`(function(){function d(){document.body.classList.add('site-ready','hero-ready');var l=document.getElementById('site-loader');if(!l)return;l.classList.add('is-done');setTimeout(function(){l.remove();},350);}document.readyState==='loading'?document.addEventListener('DOMContentLoaded',function(){setTimeout(d,280);}):setTimeout(d,280);})();`}
+      </script>
+    )}
     <Header active={active} />
     <main>
       <slot />

@@ -26,7 +26,7 @@ const videoClass = ['bg-video', className, cover ? 'bg-video--cover' : ''].filte
   disablepictureinpicture
   disableremoteplayback
   poster={poster}
-  preload={eager ? 'auto' : 'none'}
+  preload={eager ? 'metadata' : 'none'}
   data-bg-video
   {...(!eager ? { 'data-lazy': '' } : {})}
 >

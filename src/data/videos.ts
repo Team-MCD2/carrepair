@@ -4,14 +4,27 @@
 
 const cloud = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME as string | undefined;
 
+/** Réduit le poids des MP4 Cloudinary sans changer l’URL locale. */
+function optimizeCloudinaryVideoUrl(url: string): string {
+  if (!url.includes('res.cloudinary.com') || !url.includes('/video/upload/')) {
+    return url;
+  }
+  const marker = '/video/upload/';
+  const i = url.indexOf(marker);
+  const after = url.slice(i + marker.length);
+  if (/^(q_|w_|c_|f_|sp_|fl_)/.test(after)) return url;
+  const base = url.slice(0, i + marker.length);
+  return `${base}q_auto:eco,w_1280,c_limit,f_mp4/${after}`;
+}
+
 function cloudinaryUrl(publicIdOrUrl: string | undefined, localFallback: string): string {
   if (!publicIdOrUrl?.trim()) return localFallback;
   if (publicIdOrUrl.startsWith('http://') || publicIdOrUrl.startsWith('https://')) {
-    return publicIdOrUrl;
+    return optimizeCloudinaryVideoUrl(publicIdOrUrl);
   }
   if (!cloud?.trim()) return localFallback;
   const id = publicIdOrUrl.replace(/^\//, '').replace(/\.mp4$/i, '');
-  return `https://res.cloudinary.com/${cloud}/video/upload/q_auto:good,f_mp4,vc_auto/${id}.mp4`;
+  return `https://res.cloudinary.com/${cloud}/video/upload/q_auto:eco,w_1280,c_limit,f_mp4/${id}.mp4`;
 }
 
 export const VIDEOS = {

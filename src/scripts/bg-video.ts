@@ -1,18 +1,3 @@
-const LOADER_MS = 900;
-
-function getLoader() {
-  return document.getElementById('site-loader');
-}
-
-function finishLoading() {
-  const loader = getLoader();
-  document.body.classList.remove('is-loading');
-  document.body.classList.add('site-ready', 'hero-ready');
-  if (!loader) return;
-  loader.classList.add('is-done');
-  window.setTimeout(() => loader.remove(), 500);
-}
-
 function showHeroVideo() {
   const hero = document.querySelector('.hero--cinematic');
   if (hero) {
@@ -73,22 +58,13 @@ function initScrollVideos(videos: HTMLVideoElement[]) {
 
 export function setupBackgroundVideos() {
   const videos = [...document.querySelectorAll<HTMLVideoElement>('[data-bg-video]')];
-  if (!videos.length) {
-    getLoader()?.remove();
-    document.body.classList.add('site-ready', 'hero-ready');
-    return;
-  }
-
-  document.body.classList.add('is-loading');
+  if (!videos.length) return;
 
   for (const video of videos) {
     video.muted = true;
     video.addEventListener('error', () => video.classList.add('is-error'), { once: true });
   }
 
-  window.setTimeout(() => {
-    finishLoading();
-    videos.filter(isHeroVideo).forEach(playVideo);
-    initScrollVideos(videos);
-  }, LOADER_MS);
+  videos.filter(isHeroVideo).forEach(playVideo);
+  initScrollVideos(videos);
 }

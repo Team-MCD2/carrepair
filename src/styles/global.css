@@ -2137,22 +2137,11 @@ footer {
     }
 }
 
-/* Écran de chargement — synchro vidéos */
-body.is-loading {
-    overflow: hidden;
-}
-
-body.is-loading main,
-body.is-loading header,
-body.is-loading footer {
-    opacity: 0;
-}
-
+/* Écran de chargement — overlay court, le site reste visible en dessous */
 body.site-ready main,
 body.site-ready header,
 body.site-ready footer {
     opacity: 1;
-    transition: opacity 0.55s ease 0.08s;
 }
 
 .site-loader {
@@ -2162,8 +2151,9 @@ body.site-ready footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--noir);
-    transition: opacity 0.65s ease, visibility 0.65s ease;
+    background: rgba(11, 11, 11, 0.92);
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+    pointer-events: none;
 }
 
 .site-loader.is-done {

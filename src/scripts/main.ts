@@ -183,9 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (!prefersReducedMotion && hasVideos) {
     setupBackgroundVideos();
-  } else {
-    document.getElementById('site-loader')?.remove();
-    document.body.classList.add('site-ready', 'hero-ready');
   }
 
   runWhenIdle(() => {
