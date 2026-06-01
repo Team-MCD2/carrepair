@@ -598,7 +598,11 @@ nav {
 }
 
 .hero--cinematic.hero--video::before {
-    display: none;
+    display: block;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(to right, rgba(11, 11, 11, 0.48) 35%, rgba(11, 11, 11, 0.2) 100%),
+                linear-gradient(to bottom, rgba(11, 11, 11, 0.1) 0%, rgba(11, 11, 11, 0.3) 100%);
 }
 
 .hero--cinematic .hero-content {
@@ -611,7 +615,7 @@ nav {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right, rgba(11, 11, 11, 0.88) 0%, rgba(11, 11, 11, 0.72) 85%, rgba(11, 11, 11, 0) 100%);
+    background: linear-gradient(to right, rgba(11, 11, 11, 0.3) 0%, rgba(11, 11, 11, 0.12) 85%, transparent 100%);
     z-index: -1;
     pointer-events: none;
     border-radius: 8px;
