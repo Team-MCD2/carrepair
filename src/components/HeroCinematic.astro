@@ -1,13 +1,11 @@
 ---
-import LocalVideo from './LocalVideo.astro';
-import { VIDEOS, POSTERS } from '../data/videos';
+import { POSTERS } from '../data/videos';
 
 interface Props {
-  videoSrc?: string;
   posterSrc?: string;
 }
 
-const { videoSrc = VIDEOS.hero, posterSrc = POSTERS.hero } = Astro.props;
+const { posterSrc = POSTERS.hero } = Astro.props;
 ---
 
 <section class="hero hero--video hero--cinematic">
@@ -22,7 +20,6 @@ const { videoSrc = VIDEOS.hero, posterSrc = POSTERS.hero } = Astro.props;
       decoding="async"
       loading="eager"
     />
-    <LocalVideo src={videoSrc} cover={true} class="hero-video" eager={true} />
   </div>
   <div class="container">
     <div class="hero-content">
