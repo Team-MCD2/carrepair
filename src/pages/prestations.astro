@@ -2,13 +2,26 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LocalVideo from '../components/LocalVideo.astro';
 import { VIDEOS, POSTERS } from '../data/videos';
+import { breadcrumbJsonLd, mergeJsonLd, webPageJsonLd } from '../data/seo';
+
+const pageTitle = 'Nos Prestations — Mécanique, Carrosserie & Pneumatique | Car Repair Toulouse';
+const pageDescription =
+  'Prestations Car Repair à Toulouse (31300) : entretien mécanique, carrosserie, peinture, pneumatique et vente de véhicules. Devis gratuit au 05 62 83 74 29.';
+
+const jsonLd = mergeJsonLd(
+  webPageJsonLd({ title: pageTitle, description: pageDescription, path: '/prestations/' }),
+  breadcrumbJsonLd([
+    { name: 'Accueil', path: '/' },
+    { name: 'Prestations', path: '/prestations/' },
+  ]),
+);
 ---
 
 <BaseLayout
-  title="Nos Prestations — Mécanique, Carrosserie & Pneumatique | Car Repair Toulouse"
-  description="Découvrez les prestations de Car Repair Toulouse : entretien mécanique, carrosserie, pneumatique et vente de véhicules."
+  title={pageTitle}
+  description={pageDescription}
   active="prestations"
-  ogImage="https://www.car-repair.fr/assets/vehicules.png"
+  jsonLd={jsonLd}
 >
 <!-- Subpage Hero -->
     <section class="subpage-hero subpage-hero--video">

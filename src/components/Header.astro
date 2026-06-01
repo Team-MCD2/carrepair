@@ -1,5 +1,6 @@
 ---
 import logoImg from '../assets/logo.png';
+import { SITE } from '../data/site';
 
 interface Props {
   active?: 'index' | 'prestations' | 'a-propos' | 'contact';
@@ -35,7 +36,9 @@ const links = [
         <span></span>
       </button>
     </nav>
-    <a href="/contact/" class="btn-header">Demander un Devis</a>
+    <a href={`tel:${SITE.phoneTel}`} class="btn-header" aria-label={`Appeler Car Repair au ${SITE.phone}`}>
+      {SITE.phone}
+    </a>
   </div>
 </header>
 

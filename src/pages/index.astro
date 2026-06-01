@@ -4,45 +4,22 @@ import HeroCinematic from '../components/HeroCinematic.astro';
 import VideoCard from '../components/VideoCard.astro';
 import LocalVideo from '../components/LocalVideo.astro';
 import { VIDEOS, POSTERS, showcaseVideos } from '../data/videos';
+import { breadcrumbJsonLd, localBusinessJsonLd, mergeJsonLd, webPageJsonLd } from '../data/seo';
 
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'AutoRepair',
-  name: 'Car Repair',
-  image: 'https://www.car-repair.fr/assets/logo.png',
-  url: 'https://www.car-repair.fr',
-  telephone: ['+33562837429', '+33749924436'],
-  email: 'info@car-repair.fr',
-  priceRange: '$$',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: '34 Rue Adolphe Coll',
-    addressLocality: 'Toulouse',
-    postalCode: '31300',
-    addressCountry: 'FR',
-  },
-  geo: { '@type': 'GeoCoordinates', latitude: 43.598285, longitude: 1.423026 },
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '09:00',
-      closes: '18:00',
-    },
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: 'Saturday',
-      opens: '10:00',
-      closes: '17:00',
-    },
-  ],
-  aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.5', reviewCount: '500' },
-};
+const pageTitle = 'Car Repair — Garage Automobile Multimarques à Toulouse (31300)';
+const pageDescription =
+  'Car Repair, garage automobile à Toulouse et en Haute-Garonne. Mécanique multimarque, carrosserie, peinture, pneumatique. Devis gratuit — appelez le 05 62 83 74 29.';
+
+const jsonLd = mergeJsonLd(
+  localBusinessJsonLd(),
+  webPageJsonLd({ title: pageTitle, description: pageDescription, path: '/' }),
+  breadcrumbJsonLd([{ name: 'Accueil', path: '/' }]),
+);
 ---
 
 <BaseLayout
-  title="Car Repair — Garage Automobile Multimarques à Toulouse"
-  description="Car Repair, votre garage automobile à Toulouse (31300). Mécanique toutes marques, carrosserie, peinture, pneumatique et vente de véhicules. Devis gratuit. ☎ 05 62 83 74 29."
+  title={pageTitle}
+  description={pageDescription}
   active="index"
   jsonLd={jsonLd}
   preloadHeroImage={POSTERS.hero}

@@ -2,13 +2,26 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LocalVideo from '../components/LocalVideo.astro';
 import { VIDEOS, POSTERS } from '../data/videos';
+import { breadcrumbJsonLd, mergeJsonLd, webPageJsonLd } from '../data/seo';
+
+const pageTitle = 'À Propos — Garage Car Repair à Toulouse depuis 2021';
+const pageDescription =
+  'Car Repair, garage automobile multimarque à Toulouse (31300) depuis 2021. Qualité, transparence des prix et expertise mécanique, carrosserie et pneumatique.';
+
+const jsonLd = mergeJsonLd(
+  webPageJsonLd({ title: pageTitle, description: pageDescription, path: '/a-propos/' }),
+  breadcrumbJsonLd([
+    { name: 'Accueil', path: '/' },
+    { name: 'À Propos', path: '/a-propos/' },
+  ]),
+);
 ---
 
 <BaseLayout
-  title="À Propos — Garage Car Repair à Toulouse depuis 2021"
-  description="Découvrez l'histoire de Car Repair, réparateur auto multimarque et spécialiste pneumatique à Toulouse (31300). Nos engagements : qualité, prix, et professionnalisme."
+  title={pageTitle}
+  description={pageDescription}
   active="a-propos"
-  ogImage="https://www.car-repair.fr/assets/vehicules.png"
+  jsonLd={jsonLd}
 >
 <!-- Subpage Hero -->
     <section class="subpage-hero subpage-hero--video">

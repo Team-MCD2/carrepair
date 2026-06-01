@@ -2,13 +2,26 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LocalVideo from '../components/LocalVideo.astro';
 import { VIDEOS, POSTERS } from '../data/videos';
+import { breadcrumbJsonLd, mergeJsonLd, webPageJsonLd } from '../data/seo';
+
+const pageTitle = 'Contact — Garage Car Repair Toulouse | Devis Gratuit';
+const pageDescription =
+  'Contactez Car Repair à Toulouse, 34 Rue Adolphe Coll (31300). Devis gratuit pour mécanique, carrosserie et pneumatique. Tel : 05 62 83 74 29.';
+
+const jsonLd = mergeJsonLd(
+  webPageJsonLd({ title: pageTitle, description: pageDescription, path: '/contact/' }),
+  breadcrumbJsonLd([
+    { name: 'Accueil', path: '/' },
+    { name: 'Contact', path: '/contact/' },
+  ]),
+);
 ---
 
 <BaseLayout
-  title="Contact — Garage Car Repair Toulouse | Devis Gratuit"
-  description="Contactez le garage Car Repair à Toulouse. Prenez RDV ou demandez un devis gratuit en ligne pour réparation mécanique, parallélisme ou carrosserie. ☎ 05 62 83 74 29."
+  title={pageTitle}
+  description={pageDescription}
   active="contact"
-  ogImage="https://www.car-repair.fr/assets/logo.png"
+  jsonLd={jsonLd}
 >
 <!-- Subpage Hero -->
     <section class="subpage-hero subpage-hero--video">

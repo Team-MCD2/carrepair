@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import { SITE, absoluteUrl } from '../data/site';
 
 const cloudName = import.meta.env.PUBLIC_CLOUDINARY_CLOUD_NAME as string | undefined;
 
@@ -11,7 +12,7 @@ interface Props {
   active?: 'index' | 'prestations' | 'a-propos' | 'contact';
   ogImage?: string;
   noindex?: boolean;
-  jsonLd?: object;
+  jsonLd?: object | object[];
   preloadHeroImage?: string;
 }
 
@@ -19,13 +20,25 @@ const {
   title,
   description,
   active,
-  ogImage = 'https://www.car-repair.fr/assets/vehicules.png',
+  ogImage = absoluteUrl('/assets/vehicules.png'),
   noindex = false,
   jsonLd,
   preloadHeroImage,
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, 'https://www.car-repair.fr/').href;
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const { geo, address } = SITE;
+const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE.url}/#website`,
+  url: SITE.url,
+  name: SITE.name,
+  description,
+  inLanguage: 'fr-FR',
+  publisher: { '@id': `${SITE.url}/#business` },
+};
 ---
 
 <!DOCTYPE html>
@@ -35,22 +48,35 @@ const canonical = new URL(Astro.url.pathname, 'https://www.car-repair.fr/').href
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="fr" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
+    <meta name="theme-color" content="#0b0b0b" />
+    <meta name="author" content={SITE.legalName} />
+
+    <meta name="geo.region" content="FR-31" />
+    <meta name="geo.placename" content={address.city} />
+    <meta name="geo.position" content={`${geo.latitude};${geo.longitude}`} />
+    <meta name="ICBM" content={`${geo.latitude}, ${geo.longitude}`} />
 
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fr_FR" />
+    <meta property="og:site_name" content={SITE.name} />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={`${SITE.name} — Garage automobile à Toulouse`} />
 
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonical} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonical} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     {preloadHeroImage && (
       <link rel="preload" as="image" href={preloadHeroImage} fetchpriority="high" />
@@ -78,7 +104,10 @@ const canonical = new URL(Astro.url.pathname, 'https://www.car-repair.fr/').href
       />
     </noscript>
 
-    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+    <script type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
+    {jsonLdItems.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
   </head>
   <body class="site-ready hero-ready">
     <Header active={active} />
@@ -91,4 +120,3 @@ const canonical = new URL(Astro.url.pathname, 'https://www.car-repair.fr/').href
     </script>
   </body>
 </html>
-

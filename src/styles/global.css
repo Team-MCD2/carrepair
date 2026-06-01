@@ -455,7 +455,7 @@ nav {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.4;
+    opacity: 0.55;
 }
 
 .video-card .bg-video,
@@ -601,24 +601,17 @@ nav {
     display: block;
     z-index: 2;
     pointer-events: none;
-    background: linear-gradient(to right, rgba(11, 11, 11, 0.48) 35%, rgba(11, 11, 11, 0.2) 100%),
-                linear-gradient(to bottom, rgba(11, 11, 11, 0.1) 0%, rgba(11, 11, 11, 0.3) 100%);
+    background: linear-gradient(to right, rgba(11, 11, 11, 0.55) 38%, rgba(11, 11, 11, 0.22) 100%),
+                linear-gradient(to bottom, rgba(11, 11, 11, 0.12) 0%, rgba(11, 11, 11, 0.32) 100%);
 }
 
 .hero--cinematic .hero-content {
     position: relative;
     max-width: 580px;
-    padding: 1.75rem 2rem;
 }
 
-.hero--cinematic .hero-content::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to right, rgba(11, 11, 11, 0.3) 0%, rgba(11, 11, 11, 0.12) 85%, transparent 100%);
-    z-index: -1;
-    pointer-events: none;
-    border-radius: 8px;
+.hero--cinematic .hero-title {
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55);
 }
 
 .hero--cinematic .hero-title.text-gradient {
@@ -630,7 +623,8 @@ nav {
 }
 
 .hero--cinematic .hero-desc {
-    color: rgba(255, 255, 255, 0.88);
+    color: var(--blanc);
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.65), 0 0 24px rgba(0, 0, 0, 0.35);
 }
 
 body.hero-ready .hero .reveal-item {
@@ -1243,14 +1237,14 @@ body.hero-ready .hero .reveal-item:nth-child(4) { animation-delay: 0.55s; }
     width: 100%;
     height: 100%;
     object-fit: cover;
-    opacity: 0.35;
+    opacity: 0.55;
 }
 
 .subpage-hero--video::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(11, 11, 11, 0.7) 0%, rgba(11, 11, 11, 0.95) 100%);
+    background: linear-gradient(180deg, rgba(11, 11, 11, 0.48) 0%, rgba(11, 11, 11, 0.72) 100%);
     z-index: 1;
 }
 
@@ -2091,7 +2085,11 @@ footer {
     }
     
     .btn-header {
-        display: none;
+        display: inline-flex;
+        padding: 0.45rem 0.7rem;
+        font-size: 0.72rem;
+        letter-spacing: 0;
+        white-space: nowrap;
     }
     
     .hero-title {

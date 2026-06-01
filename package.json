@@ -9,6 +9,7 @@
     "videos:download": "python scripts/download-videos.py"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "astro": "^5.7.10"
   },
   "devDependencies": {

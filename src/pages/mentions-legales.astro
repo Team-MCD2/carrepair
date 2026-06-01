@@ -1,12 +1,24 @@
 ﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { breadcrumbJsonLd, mergeJsonLd, webPageJsonLd } from '../data/seo';
+
+const pageTitle = 'Mentions Légales — Car Repair Toulouse';
+const pageDescription = 'Mentions légales du site www.car-repair-france.fr et du garage Car Repair à Toulouse.';
+
+const jsonLd = mergeJsonLd(
+  webPageJsonLd({ title: pageTitle, description: pageDescription, path: '/mentions-legales/' }),
+  breadcrumbJsonLd([
+    { name: 'Accueil', path: '/' },
+    { name: 'Mentions Légales', path: '/mentions-legales/' },
+  ]),
+);
 ---
 
 <BaseLayout
-  title="Mentions Légales — Car Repair Toulouse"
-  description="Mentions légales du site car-repair.fr."
-  ogImage="https://www.car-repair.fr/assets/logo.png"
+  title={pageTitle}
+  description={pageDescription}
   noindex
+  jsonLd={jsonLd}
 >
     <section class="subpage-hero">
         <div class="container">
@@ -24,7 +36,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <div class="legal-content">
                 <div class="legal-section">
                     <h2>1. Éditeur du Site</h2>
-                    <p>Le site Internet <strong>www.car-repair.fr</strong> est édité par l'entreprise <strong>CAR REPAIR</strong>, entreprise immatriculée sous le régime de la société par actions simplifiée (SAS) au Registre du Commerce et des Sociétés (RCS) de Toulouse.</p>
+                    <p>Le site Internet <strong>www.car-repair-france.fr</strong> est édité par l'entreprise <strong>CAR REPAIR</strong>, entreprise immatriculée sous le régime de la société par actions simplifiée (SAS) au Registre du Commerce et des Sociétés (RCS) de Toulouse.</p>
                     <ul>
                         <li><strong>Siège social :</strong> 34 Rue Adolphe Coll, 31300 Toulouse</li>
                         <li><strong>SIRET :</strong> 907 944 821 00012</li>
@@ -59,7 +71,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
                 <div id="cookies" class="legal-section">
                     <h2>5. Utilisation des Cookies</h2>
-                    <p>Le site <strong>www.car-repair.fr</strong> utilise des cookies pour améliorer l'expérience utilisateur et réaliser des statistiques anonymes de visites (Google Analytics). Un cookie est un petit fichier texte enregistré sur votre terminal (ordinateur, tablette ou smartphone) lors de la consultation du site.</p>
+                    <p>Le site <strong>www.car-repair-france.fr</strong> utilise des cookies pour améliorer l'expérience utilisateur et réaliser des statistiques anonymes de visites (Google Analytics). Un cookie est un petit fichier texte enregistré sur votre terminal (ordinateur, tablette ou smartphone) lors de la consultation du site.</p>
                     <p>Lors de votre première visite sur notre site, un bandeau vous informe de la présence de ces cookies et vous invite à indiquer votre choix. Vous pouvez à tout moment configurer votre navigateur pour bloquer les cookies ou être informé de leur enregistrement. Le refus d'installation d'un cookie peut limiter l'accès à certaines fonctionnalités du site.</p>
                 </div>
 
