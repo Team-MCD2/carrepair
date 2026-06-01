@@ -362,7 +362,7 @@ nav {
     will-change: transform;
 }
 
-/* Hero cin�matique : image vehicules.png puis fondu vers la vid�o */
+/* Hero cinématique : image vehicules.png puis fondu vers la vidéo */
 .hero--cinematic .hero-media {
     background-color: var(--noir);
 }
@@ -473,7 +473,7 @@ nav {
     min-height: 400px;
 }
 
-/* YouTube int�gr� (30 s en boucle, sans ffmpeg) */
+/* YouTube intégré (30 s en boucle, sans ffmpeg) */
 .yt-loop {
     position: relative;
     width: 100%;
