@@ -6,11 +6,16 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "dev:email": "node email-server.js",
     "videos:download": "python scripts/download-videos.py"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
-    "astro": "^5.7.10"
+    "astro": "^5.7.10",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "nodemailer": "^8.0.10"
   },
   "devDependencies": {
     "typescript": "^5.8.3"

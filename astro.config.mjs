@@ -12,6 +12,26 @@ export default defineConfig({
     inlineStylesheets: 'auto',
   },
   compressHTML: true,
+  vite: {
+    build: {
+      cssMinify: true,
+    },
+    server: {
+      watch: {
+        usePolling: false,
+        ignored: [
+          '**/.gemini/**',
+          '**/node_modules/**', 
+          '**/.git/**',
+          '**/.vscode/**',
+          'C:\\Users\\PC\\.gemini/**',
+        ],
+      },
+      fs: {
+        strict: false,
+      },
+    },
+  },
   integrations: [
     sitemap({
       filter: (page) => !page.includes('/mentions-legales'),
@@ -32,9 +52,4 @@ export default defineConfig({
       },
     }),
   ],
-  vite: {
-    build: {
-      cssMinify: true,
-    },
-  },
 });
