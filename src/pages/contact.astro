@@ -212,13 +212,14 @@ const jsonLd = mergeJsonLd(
 
           // Réinitialiser le formulaire
           contactForm.reset();
-        } catch (error) {
+        } catch (error: any) {
           console.error('Erreur lors de l\'envoi:', error);
+          const errorMsg = error?.text || error?.message || JSON.stringify(error) || 'Erreur inconnue';
           // @ts-ignore
           Swal.fire({
             icon: 'error',
-            title: 'Erreur réseau',
-            text: 'Impossible de contacter le serveur. Veuillez vérifier votre connexion ou réessayer plus tard.',
+            title: 'Erreur technique',
+            text: `Un problème est survenu : ${errorMsg}. Envoyez-moi une capture de ce message !`,
             confirmButtonColor: '#dc2626'
           });
         } finally {
