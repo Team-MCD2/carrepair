@@ -157,8 +157,9 @@ const jsonLd = mergeJsonLd(
     <!-- Footer -->
 </BaseLayout>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+  import Swal from 'sweetalert2';
+
   document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contact-form') as HTMLFormElement;
     const submitButton = contactForm?.querySelector('button[type="submit"]') as HTMLButtonElement;
