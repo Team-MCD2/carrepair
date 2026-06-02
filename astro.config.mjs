@@ -1,11 +1,13 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import vercel from '@astrojs/vercel';
 
 const site = 'https://www.car-repair-france.fr';
 
 export default defineConfig({
   site,
-  output: 'static',
+  output: 'server',
+  adapter: vercel(),
   trailingSlash: 'always',
   build: {
     format: 'directory',

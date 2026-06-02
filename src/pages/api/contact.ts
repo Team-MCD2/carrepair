@@ -30,15 +30,15 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   try {
-    const formData = await request.formData();
+    const data = await request.json();
 
     // Récupérer les données du formulaire
-    const lastname = formData.get('lastname');
-    const firstname = formData.get('firstname');
-    const email = formData.get('email');
-    const phone = formData.get('phone');
-    const service = formData.get('service');
-    const message = formData.get('message');
+    const lastname = data.lastname;
+    const firstname = data.firstname;
+    const email = data.email;
+    const phone = data.phone;
+    const service = data.service;
+    const message = data.message;
 
     // Valider les champs obligatoires
     if (!lastname || !firstname || !email || !phone || !service || !message) {
@@ -126,23 +126,23 @@ Message automatique envoyé depuis le formulaire de contact du site car-repair-f
       to: email as string,
       subject: 'Confirmation de votre demande de devis - Car Repair',
       html: `
-        <h2>Merci pour votre demande ${firstname} !</h2>
-        <p>Nous avons bien reçu votre demande de devis pour <strong>${serviceLabel}</strong>.</p>
-        <p>Notre équipe vous répondra sous <strong>24 heures ouvrées</strong> au numéro <strong>${phone}</strong> ou par email.</p>
-        <p>À bientôt !</p>
+        <h2>Bonjour ${firstname},</h2>
+        <p>Nous vous remercions pour votre confiance. Votre demande de devis concernant la prestation <strong>${serviceLabel}</strong> a bien été enregistrée.</p>
+        <p>Un conseiller technique Car Repair prendra contact avec vous dans un délai de <strong>24 à 48 heures ouvrées</strong> au <strong>${phone}</strong> ou par retour d'e-mail.</p>
+        <p>Cordialement,</p>
         <hr>
-        <p><strong>Car Repair</strong><br>
+        <p><strong>L'équipe Car Repair</strong><br>
         34 Rue Adolphe Coll<br>
         31300 Toulouse<br>
         Tél : 05 62 83 74 29</p>
       `,
-      text: `Merci pour votre demande ${firstname}!\n\nNous avons bien reçu votre demande de devis pour ${serviceLabel}.\n\nNotre équipe vous répondra sous 24 heures ouvrées au numéro ${phone} ou par email.\n\nÀ bientôt!`,
+      text: `Bonjour ${firstname},\n\nNous vous remercions pour votre confiance. Votre demande de devis concernant la prestation ${serviceLabel} a bien été enregistrée.\n\nUn conseiller technique Car Repair prendra contact avec vous dans un délai de 24 à 48 heures ouvrées au ${phone} ou par retour d'e-mail.\n\nCordialement,\n\nL'équipe Car Repair\n34 Rue Adolphe Coll\n31300 Toulouse\nTél : 05 62 83 74 29`,
     });
 
     return new Response(
       JSON.stringify({
         success: true,
-        message: 'Votre demande a été envoyée avec succès!',
+        message: 'Votre demande de devis a bien été prise en compte. Notre équipe vous recontactera dans les plus brefs délais.',
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );
@@ -151,7 +151,7 @@ Message automatique envoyé depuis le formulaire de contact du site car-repair-f
 
     return new Response(
       JSON.stringify({
-        error: 'Une erreur est survenue lors de l\'envoi de votre demande. Veuillez réessayer.',
+        error: 'Une erreur est survenue lors de la transmission de votre demande. Veuillez réessayer ou nous contacter directement par téléphone.',
       }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );

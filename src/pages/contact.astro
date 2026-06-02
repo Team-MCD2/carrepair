@@ -184,8 +184,8 @@ const jsonLd = mergeJsonLd(
             message: (contactForm.querySelector('#message') as HTMLTextAreaElement).value,
           };
 
-          // Envoyer les données au serveur d'emails
-          const response = await fetch('http://localhost:5555/api/contact', {
+          // Envoyer les données à la route d'API interne
+          const response = await fetch('/api/contact', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
