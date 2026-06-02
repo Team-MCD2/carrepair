@@ -8,7 +8,6 @@ export default defineConfig({
   site,
   output: 'server',
   adapter: vercel(),
-  trailingSlash: 'always',
   build: {
     format: 'directory',
     inlineStylesheets: 'auto',

@@ -3,9 +3,9 @@ import nodemailer from 'nodemailer';
 
 // Configuration du transporteur email
 const getTransporter = () => {
-  const emailUser = import.meta.env.EMAIL_USER;
-  const emailPassword = import.meta.env.EMAIL_PASSWORD;
-  const emailService = import.meta.env.EMAIL_SERVICE || 'gmail';
+  const emailUser = import.meta.env.EMAIL_USER || process.env.EMAIL_USER;
+  const emailPassword = import.meta.env.EMAIL_PASSWORD || process.env.EMAIL_PASSWORD;
+  const emailService = import.meta.env.EMAIL_SERVICE || process.env.EMAIL_SERVICE || 'gmail';
 
   if (!emailUser || !emailPassword) {
     throw new Error('EMAIL_USER et EMAIL_PASSWORD ne sont pas configurés');
@@ -49,7 +49,7 @@ export const POST: APIRoute = async ({ request }) => {
     }
 
     // Récupérer l'adresse email cible (depuis variables d'environnement)
-    const recipientEmail = import.meta.env.CONTACT_EMAIL || 'remivint@gmail.com';
+    const recipientEmail = import.meta.env.CONTACT_EMAIL || process.env.CONTACT_EMAIL || 'mwcrea.agency@gmail.com';
 
     // Créer le transporteur
     const transporter = getTransporter();
@@ -112,7 +112,7 @@ Message automatique envoyé depuis le formulaire de contact du site car-repair-f
 
     // Envoyer l'email
     await transporter.sendMail({
-      from: import.meta.env.EMAIL_USER,
+      from: import.meta.env.EMAIL_USER || process.env.EMAIL_USER,
       to: recipientEmail,
       replyTo: email as string,
       subject: `[Devis] ${firstname} ${lastname} - ${serviceLabel}`,
@@ -122,7 +122,7 @@ Message automatique envoyé depuis le formulaire de contact du site car-repair-f
 
     // Optionnel: Envoyer une confirmation au client
     await transporter.sendMail({
-      from: import.meta.env.EMAIL_USER,
+      from: import.meta.env.EMAIL_USER || process.env.EMAIL_USER,
       to: email as string,
       subject: 'Confirmation de votre demande de devis - Car Repair',
       html: `

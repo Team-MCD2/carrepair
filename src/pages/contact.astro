@@ -193,7 +193,14 @@ const jsonLd = mergeJsonLd(
             body: JSON.stringify(formData),
           });
 
-          const result = await response.json();
+          const textResult = await response.text();
+          let result;
+          try {
+            result = JSON.parse(textResult);
+          } catch(e) {
+            console.error('Non-JSON response:', textResult);
+            throw new Error('Le serveur a retourné une réponse invalide (probablement une erreur 404 ou 500).');
+          }
 
           if (response.ok) {
             // Succès
@@ -224,7 +231,7 @@ const jsonLd = mergeJsonLd(
           formMessage.style.backgroundColor = '#f8d7da';
           formMessage.style.color = '#721c24';
           formMessage.style.border = '1px solid #f5c6cb';
-          formMessage.textContent = 'Une erreur réseau est survenue. Vérifiez que le serveur d\'emails est en cours d\'exécution sur le port 3001.';
+          formMessage.textContent = 'Une erreur réseau est survenue ou la configuration est manquante sur Vercel.';
         } finally {
           // Réactiver le bouton
           submitButton.disabled = false;
