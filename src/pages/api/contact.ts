@@ -3,8 +3,8 @@ import nodemailer from 'nodemailer';
 
 // Configuration du transporteur email
 const getTransporter = () => {
-  const emailUser = import.meta.env.EMAIL_USER || process.env.EMAIL_USER;
-  const emailPassword = import.meta.env.EMAIL_PASSWORD || process.env.EMAIL_PASSWORD;
+  const emailUser = import.meta.env.EMAIL_USER || process.env.EMAIL_USER || 'suzinabot@gmail.com';
+  const emailPassword = import.meta.env.EMAIL_PASSWORD || process.env.EMAIL_PASSWORD || 'xikp vpqy mizh jadg';
   const emailService = import.meta.env.EMAIL_SERVICE || process.env.EMAIL_SERVICE || 'gmail';
 
   if (!emailUser || !emailPassword) {
@@ -112,7 +112,7 @@ Message automatique envoyé depuis le formulaire de contact du site car-repair-f
 
     // Envoyer l'email
     await transporter.sendMail({
-      from: import.meta.env.EMAIL_USER || process.env.EMAIL_USER,
+      from: import.meta.env.EMAIL_USER || process.env.EMAIL_USER || 'suzinabot@gmail.com',
       to: recipientEmail,
       replyTo: email as string,
       subject: `[Devis] ${firstname} ${lastname} - ${serviceLabel}`,
@@ -122,7 +122,7 @@ Message automatique envoyé depuis le formulaire de contact du site car-repair-f
 
     // Optionnel: Envoyer une confirmation au client
     await transporter.sendMail({
-      from: import.meta.env.EMAIL_USER || process.env.EMAIL_USER,
+      from: import.meta.env.EMAIL_USER || process.env.EMAIL_USER || 'suzinabot@gmail.com',
       to: email as string,
       subject: 'Confirmation de votre demande de devis - Car Repair',
       html: `
