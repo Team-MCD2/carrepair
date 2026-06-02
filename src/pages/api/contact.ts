@@ -3,16 +3,17 @@ import nodemailer from 'nodemailer';
 
 // Configuration du transporteur email
 const getTransporter = () => {
-  const emailUser = 'bbobou95@gmail.com';
-  const emailPassword = 'tpnh jswj pumh tpaz';
-  const emailService = 'gmail';
+  const emailUser = 'dev@microdidact.com';
+  const emailPassword = '@CQnCudbUkGvrm2';
 
   if (!emailUser || !emailPassword) {
-    throw new Error('EMAIL_USER et EMAIL_PASSWORD ne sont pas configurés');
+    throw new Error('Variables d\'environnement email manquantes');
   }
 
   return nodemailer.createTransport({
-    service: emailService,
+    host: 'mail.infomaniak.com',
+    port: 465,
+    secure: true, // true for 465, false for other ports
     auth: {
       user: emailUser,
       pass: emailPassword,
@@ -112,7 +113,7 @@ Message automatique envoyé depuis le formulaire de contact du site car-repair-f
 
     // Envoyer l'email
     await transporter.sendMail({
-      from: 'bbobou95@gmail.com',
+      from: 'dev@microdidact.com',
       to: recipientEmail,
       replyTo: email as string,
       subject: `[Devis] ${firstname} ${lastname} - ${serviceLabel}`,
@@ -122,7 +123,7 @@ Message automatique envoyé depuis le formulaire de contact du site car-repair-f
 
     // Optionnel: Envoyer une confirmation au client
     await transporter.sendMail({
-      from: 'bbobou95@gmail.com',
+      from: 'dev@microdidact.com',
       to: email as string,
       subject: 'Confirmation de votre demande de devis - Car Repair',
       html: `
