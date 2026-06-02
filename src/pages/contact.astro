@@ -159,6 +159,7 @@ const jsonLd = mergeJsonLd(
 
 <script>
   import Swal from 'sweetalert2';
+  import emailjs from '@emailjs/browser';
 
   document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contact-form') as HTMLFormElement;
@@ -184,47 +185,33 @@ const jsonLd = mergeJsonLd(
             message: (contactForm.querySelector('#message') as HTMLTextAreaElement).value,
           };
 
-          // Envoyer les données à la route d'API interne
-          const response = await fetch('/api/contact', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
+          // Envoyer les données via EmailJS
+          await emailjs.send(
+            'service_7gsbmbm',
+            'template_doaui0r',
+            {
+              from_name: formData.firstname + ' ' + formData.lastname,
+              from_email: formData.email,
+              phone: formData.phone,
+              service: formData.service,
+              message: formData.message,
+              reply_to: formData.email
             },
-            body: JSON.stringify(formData),
+            'yzelgjoTyOFY11L00'
+          );
+
+          // Succès - Popup professionnel
+          // @ts-ignore
+          Swal.fire({
+            icon: 'success',
+            title: 'Demande envoyée !',
+            text: 'Votre demande de devis a bien été prise en compte. Notre équipe vous recontactera très prochainement.',
+            confirmButtonColor: '#dc2626', // Rouge Car Repair
+            confirmButtonText: 'Parfait !'
           });
 
-          const textResult = await response.text();
-          let result;
-          try {
-            result = JSON.parse(textResult);
-          } catch(e) {
-            console.error('Non-JSON response:', textResult);
-            throw new Error('Le serveur a retourné une réponse invalide.');
-          }
-
-          if (response.ok) {
-            // Succès - Popup professionnel
-            // @ts-ignore
-            Swal.fire({
-              icon: 'success',
-              title: 'Demande envoyée !',
-              text: result.message || 'Votre demande de devis a bien été prise en compte. Notre équipe vous recontactera très prochainement.',
-              confirmButtonColor: '#dc2626', // Rouge Car Repair
-              confirmButtonText: 'Parfait !'
-            });
-
-            // Réinitialiser le formulaire
-            contactForm.reset();
-          } else {
-            // Erreur - Popup professionnel
-            // @ts-ignore
-            Swal.fire({
-              icon: 'error',
-              title: 'Oups...',
-              text: result.error || 'Une erreur est survenue lors de la transmission. Veuillez réessayer.',
-              confirmButtonColor: '#dc2626'
-            });
-          }
+          // Réinitialiser le formulaire
+          contactForm.reset();
         } catch (error) {
           console.error('Erreur lors de l\'envoi:', error);
           // @ts-ignore
