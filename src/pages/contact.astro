@@ -45,7 +45,6 @@ const jsonLd = mergeJsonLd(
                 <!-- Contact Form Wrapper -->
                 <div class="contact-form-wrapper">
                     <h2>Demander un devis gratuit</h2>
-                    <div id="form-message" class="form-message" style="display: none; margin-bottom: 1.5rem; padding: 1rem; border-radius: 0.5rem; font-weight: 500;"></div>
                     <form id="contact-form">
                         <div class="form-row">
                             <div class="form-group">
@@ -158,11 +157,11 @@ const jsonLd = mergeJsonLd(
     <!-- Footer -->
 </BaseLayout>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contact-form') as HTMLFormElement;
-    const formMessage = document.getElementById('form-message') as HTMLDivElement;
-    const submitButton = contactForm.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const submitButton = contactForm?.querySelector('button[type="submit"]') as HTMLButtonElement;
 
     if (contactForm) {
       contactForm.addEventListener('submit', async (e) => {
@@ -199,39 +198,41 @@ const jsonLd = mergeJsonLd(
             result = JSON.parse(textResult);
           } catch(e) {
             console.error('Non-JSON response:', textResult);
-            throw new Error('Le serveur a retourné une réponse invalide (probablement une erreur 404 ou 500).');
+            throw new Error('Le serveur a retourné une réponse invalide.');
           }
 
           if (response.ok) {
-            // Succès
-            formMessage.style.display = 'block';
-            formMessage.style.backgroundColor = '#d4edda';
-            formMessage.style.color = '#155724';
-            formMessage.style.border = '1px solid #c3e6cb';
-            formMessage.textContent = result.message || 'Votre demande de devis a bien été prise en compte. Notre équipe vous recontactera très prochainement.';
+            // Succès - Popup professionnel
+            // @ts-ignore
+            Swal.fire({
+              icon: 'success',
+              title: 'Demande envoyée !',
+              text: result.message || 'Votre demande de devis a bien été prise en compte. Notre équipe vous recontactera très prochainement.',
+              confirmButtonColor: '#dc2626', // Rouge Car Repair
+              confirmButtonText: 'Parfait !'
+            });
 
             // Réinitialiser le formulaire
             contactForm.reset();
-
-            // Masquer le message après 5 secondes
-            setTimeout(() => {
-              formMessage.style.display = 'none';
-            }, 8000);
           } else {
-            // Erreur
-            formMessage.style.display = 'block';
-            formMessage.style.backgroundColor = '#f8d7da';
-            formMessage.style.color = '#721c24';
-            formMessage.style.border = '1px solid #f5c6cb';
-            formMessage.textContent = result.error || 'Une erreur est survenue lors de la transmission. Veuillez réessayer.';
+            // Erreur - Popup professionnel
+            // @ts-ignore
+            Swal.fire({
+              icon: 'error',
+              title: 'Oups...',
+              text: result.error || 'Une erreur est survenue lors de la transmission. Veuillez réessayer.',
+              confirmButtonColor: '#dc2626'
+            });
           }
         } catch (error) {
           console.error('Erreur lors de l\'envoi:', error);
-          formMessage.style.display = 'block';
-          formMessage.style.backgroundColor = '#f8d7da';
-          formMessage.style.color = '#721c24';
-          formMessage.style.border = '1px solid #f5c6cb';
-          formMessage.textContent = 'Une erreur réseau est survenue ou la configuration est manquante sur Vercel.';
+          // @ts-ignore
+          Swal.fire({
+            icon: 'error',
+            title: 'Erreur réseau',
+            text: 'Impossible de contacter le serveur. Veuillez vérifier votre connexion ou réessayer plus tard.',
+            confirmButtonColor: '#dc2626'
+          });
         } finally {
           // Réactiver le bouton
           submitButton.disabled = false;
