@@ -159,17 +159,6 @@ function initContactForm() {
       }
     }
   }
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const first = (document.getElementById('firstname') as HTMLInputElement).value;
-    const last = (document.getElementById('lastname') as HTMLInputElement).value;
-    const service = select?.options[select.selectedIndex]?.text || '';
-    alert(
-      `Merci ${first} ${last} !\nVotre demande concernant "${service}" a bien été enregistrée (simulation).\nNous vous recontacterons sous 24h.`
-    );
-    form.reset();
-  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
