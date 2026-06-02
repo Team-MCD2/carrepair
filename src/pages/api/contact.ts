@@ -3,8 +3,8 @@ import nodemailer from 'nodemailer';
 
 // Configuration du transporteur email
 const getTransporter = () => {
-  const emailUser = 'suzinabot@gmail.com';
-  const emailPassword = 'xikp vpqy mizh jadg';
+  const emailUser = 'bbobou95@gmail.com';
+  const emailPassword = 'tpnh jswj pumh tpaz';
   const emailService = 'gmail';
 
   if (!emailUser || !emailPassword) {
@@ -112,7 +112,7 @@ Message automatique envoyé depuis le formulaire de contact du site car-repair-f
 
     // Envoyer l'email
     await transporter.sendMail({
-      from: 'suzinabot@gmail.com',
+      from: 'bbobou95@gmail.com',
       to: recipientEmail,
       replyTo: email as string,
       subject: `[Devis] ${firstname} ${lastname} - ${serviceLabel}`,
@@ -122,7 +122,7 @@ Message automatique envoyé depuis le formulaire de contact du site car-repair-f
 
     // Optionnel: Envoyer une confirmation au client
     await transporter.sendMail({
-      from: 'suzinabot@gmail.com',
+      from: 'bbobou95@gmail.com',
       to: email as string,
       subject: 'Confirmation de votre demande de devis - Car Repair',
       html: `
