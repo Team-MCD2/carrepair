@@ -1,6 +1,0 @@
-User-agent: *
-Allow: /
-
-Disallow: /mentions-legales/
-
-Sitemap: https://www.car-repair-france.fr/sitemap-index.xml
