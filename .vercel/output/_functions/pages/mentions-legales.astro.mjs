@@ -1,0 +1,32 @@
+import { a2 as createComponent, ad as renderComponent, al as renderTemplate, aa as maybeRenderHead } from '../chunks/astro/server_B3hFyNMH.mjs';
+import 'piccolore';
+import { $ as $$BaseLayout } from '../chunks/BaseLayout_a1uZhYI1.mjs';
+import { m as mergeJsonLd, b as breadcrumbJsonLd, w as webPageJsonLd } from '../chunks/seo_CKQiDgGp.mjs';
+export { renderers } from '../renderers.mjs';
+
+const $$MentionsLegales = createComponent(($$result, $$props, $$slots) => {
+  const pageTitle = "Mentions L\xE9gales \u2014 Car Repair Toulouse";
+  const pageDescription = "Mentions l\xE9gales du site www.car-repair-france.fr et du garage Car Repair \xE0 Toulouse.";
+  const jsonLd = mergeJsonLd(
+    webPageJsonLd({ title: pageTitle, description: pageDescription, path: "/mentions-legales/" }),
+    breadcrumbJsonLd([
+      { name: "Accueil", path: "/" },
+      { name: "Mentions L\xE9gales", path: "/mentions-legales/" }
+    ])
+  );
+  return renderTemplate`${renderComponent($$result, "BaseLayout", $$BaseLayout, { "title": pageTitle, "description": pageDescription, "noindex": true, "jsonLd": jsonLd }, { "default": ($$result2) => renderTemplate` ${maybeRenderHead()}<section class="subpage-hero"> <div class="container"> <ul class="breadcrumbs"> <li><a href="/">Accueil</a></li> <li class="active">Mentions Légales</li> </ul> <h1 class="subpage-title text-gradient">Mentions Légales</h1> <p class="subpage-desc">Informations légales obligatoires concernant l'éditeur du site, l'hébergement, la propriété intellectuelle et les données personnelles (RGPD).</p> </div> </section> <section class="section-padding"> <div class="container"> <div class="legal-content"> <div class="legal-section"> <h2>1. Éditeur du Site</h2> <p>Le site Internet <strong>www.car-repair-france.fr</strong> est édité par l'entreprise <strong>CAR REPAIR</strong>, entreprise immatriculée sous le régime de la société par actions simplifiée (SAS) au Registre du Commerce et des Sociétés (RCS) de Toulouse.</p> <ul> <li><strong>Siège social :</strong> 34 Rue Adolphe Coll, 31300 Toulouse</li> <li><strong>SIRET :</strong> 907 944 821 00012</li> <li><strong>Téléphone :</strong> 05 62 83 74 29 / 07 49 92 44 36</li> <li><strong>Adresse e-mail :</strong> info@car-repair.fr</li> <li><strong>Directeur de la publication :</strong> Le Gérant du garage CAR REPAIR</li> </ul> </div> <div class="legal-section"> <h2>2. Hébergement du Site</h2> <p>Le site est hébergé par la société <strong>OVH SAS</strong>, filiale d'OVH Groupe SAS.</p> <ul> <li><strong>Adresse de l'hébergeur :</strong> 2 rue Kellermann, 59100 Roubaix, France</li> <li><strong>Site Internet de l'hébergeur :</strong> www.ovh.com</li> <li><strong>Téléphone de l'hébergeur :</strong> 1007 (numéro unique)</li> </ul> </div> <div class="legal-section"> <h2>3. Propriété Intellectuelle</h2> <p>L'ensemble des éléments constituant ce site (textes, graphismes, logos, photos, images, icônes, sons, vidéos) est la propriété exclusive de <strong>CAR REPAIR</strong> ou de ses partenaires et est protégé par la législation française et internationale relative aux droits d'auteur et à la propriété intellectuelle.</p> <p>Toute reproduction, représentation, modification, publication ou adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est strictement interdite sauf autorisation écrite préalable de l'éditeur. Les logos de marque de voitures ou icônes de marques sont utilisés sous licence ou à des fins purement informatives de compatibilité.</p> </div> <div id="rgpd" class="legal-section"> <h2>4. Protection des Données Personnelles (RGPD)</h2> <p>Conformément à la réglementation européenne (RGPD) et à la loi Informatique et Libertés du 6 janvier 1978 modifiée, vous disposez d'un droit d'accès, de rectification, d'opposition, de portabilité et de suppression des données vous concernant.</p> <p>Les informations collectées via le formulaire de contact (nom, prénom, adresse e-mail, numéro de téléphone) sont exclusivement destinées au traitement de votre demande de devis ou de rendez-vous par l'équipe de CAR REPAIR. Elles ne sont en aucun cas vendues, louées ou cédées à des tiers. Les données sont conservées pour une durée maximale de 3 ans après la dernière prise de contact commerciale.</p> <p>Pour exercer vos droits relatifs aux données personnelles, vous pouvez envoyer un e-mail à : <strong>info@car-repair.fr</strong> ou écrire par courrier à l'adresse de notre siège social accompagné d'un justificatif d'identité.</p> </div> <div id="cookies" class="legal-section"> <h2>5. Utilisation des Cookies</h2> <p>Le site <strong>www.car-repair-france.fr</strong> utilise des cookies pour améliorer l'expérience utilisateur et réaliser des statistiques anonymes de visites (Google Analytics). Un cookie est un petit fichier texte enregistré sur votre terminal (ordinateur, tablette ou smartphone) lors de la consultation du site.</p> <p>Lors de votre première visite sur notre site, un bandeau vous informe de la présence de ces cookies et vous invite à indiquer votre choix. Vous pouvez à tout moment configurer votre navigateur pour bloquer les cookies ou être informé de leur enregistrement. Le refus d'installation d'un cookie peut limiter l'accès à certaines fonctionnalités du site.</p> </div> <div class="legal-section"> <h2>6. Limitation de Responsabilité</h2> <p>CAR REPAIR s'efforce d'assurer au mieux de ses possibilités l'exactitude et la mise à jour des informations diffusées sur ce site. Toutefois, CAR REPAIR ne peut garantir l'exactitude absolue des données et décline toute responsabilité pour toute omission ou imprécision dans les informations du site.</p> <p>Le site contient des liens vers des sites tiers (ex. fiches Google, avis clients, etc.). N'exerçant aucun contrôle sur ces sites externes, CAR REPAIR ne saurait être tenu pour responsable de leur contenu ou des pratiques de protection des données personnelles de ces derniers.</p> </div> </div> </div> </section> ` })}`;
+}, "C:/Users/PC/Desktop/car_repare/carrepair/src/pages/mentions-legales.astro", void 0);
+
+const $$file = "C:/Users/PC/Desktop/car_repare/carrepair/src/pages/mentions-legales.astro";
+const $$url = "/mentions-legales";
+
+const _page = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: $$MentionsLegales,
+  file: $$file,
+  url: $$url
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const page = () => _page;
+
+export { page };
