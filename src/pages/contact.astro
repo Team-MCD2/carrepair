@@ -45,7 +45,7 @@ const jsonLd = mergeJsonLd(
                 <!-- Contact Form Wrapper -->
                 <div class="contact-form-wrapper">
                     <h2>Demander un devis gratuit</h2>
-                    <form id="contact-form">
+                    <form id="contact-form" data-api-form="car_repare">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="lastname" class="form-label">Nom *</label>
@@ -154,81 +154,4 @@ const jsonLd = mergeJsonLd(
         </div>
     </section>
 
-    <!-- Footer -->
 </BaseLayout>
-
-<script>
-  import Swal from 'sweetalert2';
-  import emailjs from '@emailjs/browser';
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const contactForm = document.getElementById('contact-form') as HTMLFormElement;
-    const submitButton = contactForm?.querySelector('button[type="submit"]') as HTMLButtonElement;
-
-    if (contactForm) {
-      contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        // Désactiver le bouton pendant l'envoi
-        submitButton.disabled = true;
-        const originalText = submitButton.textContent;
-        submitButton.textContent = 'Envoi en cours...';
-
-        try {
-          // Récupérer les données du formulaire
-          const formData = {
-            lastname: (contactForm.querySelector('#lastname') as HTMLInputElement).value,
-            firstname: (contactForm.querySelector('#firstname') as HTMLInputElement).value,
-            email: (contactForm.querySelector('#email') as HTMLInputElement).value,
-            phone: (contactForm.querySelector('#phone') as HTMLInputElement).value,
-            service: (contactForm.querySelector('#service-select') as HTMLSelectElement).value,
-            message: (contactForm.querySelector('#message') as HTMLTextAreaElement).value,
-          };
-
-          // Envoyer les données via EmailJS
-          await emailjs.send(
-            'service_7gsbmbm',
-            'template_doaui0r',
-            {
-              from_name: formData.firstname + ' ' + formData.lastname,
-              from_email: formData.email,
-              phone: formData.phone,
-              service: formData.service,
-              message: formData.message,
-              reply_to: formData.email
-            },
-            'yzeIgjoTyOFY11L00'
-          );
-
-          // Succès - Popup professionnel
-          // @ts-ignore
-          Swal.fire({
-            icon: 'success',
-            title: 'Demande envoyée !',
-            text: 'Votre demande de devis a bien été prise en compte. Notre équipe vous recontactera très prochainement.',
-            confirmButtonColor: '#dc2626', // Rouge Car Repair
-            confirmButtonText: 'Parfait !'
-          });
-
-          // Réinitialiser le formulaire
-          contactForm.reset();
-        } catch (error: any) {
-          console.error('Erreur lors de l\'envoi:', error);
-          const errorMsg = error?.text || error?.message || JSON.stringify(error) || 'Erreur inconnue';
-          // @ts-ignore
-          Swal.fire({
-            icon: 'error',
-            title: 'Erreur technique',
-            text: `Un problème est survenu : ${errorMsg}. Envoyez-moi une capture de ce message !`,
-            confirmButtonColor: '#dc2626'
-          });
-        } finally {
-          // Réactiver le bouton
-          submitButton.disabled = false;
-          submitButton.textContent = originalText;
-        }
-      });
-    }
-  });
-</script>
-
